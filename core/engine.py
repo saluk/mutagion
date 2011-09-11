@@ -54,11 +54,11 @@ class Engine:
                 self.world.update()
     def make_screen(self):
         flags = pygame.RESIZABLE|pygame.FULLSCREEN*self.fullscreen
+        pygame.display.set_icon(pygame.image.load("art/icons/ico.png"))
         self.window = pygame.display.set_mode([self.swidth,self.sheight],flags)
         self.surface = pygame.Surface([self.iwidth,self.iheight]).convert()
         self.blank = self.surface.convert()
         self.blank.fill([0,0,0])
-        pygame.display.set_icon(pygame.image.load("art/icons/ico.png"))
     def clear_screen(self):
         self.surface.blit(self.blank,[0,0])
     def draw_screen(self):

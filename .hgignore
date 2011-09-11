@@ -1,0 +1,4 @@
+syntax: glob
+*.pyc
+lastlog.txt
+loghistory.txt

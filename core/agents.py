@@ -32,11 +32,19 @@ class Agent(object):
         self.hotspot = [0,0]
         self.rotation_on_rot = True
         self.visible = True
+        self.gfd = 1
+        self.gft = 42
     def load(self,art=None):
         if not art:
             art = self.art
         if not art in memory:
-            memory[art] = pygame.image.load(art).convert()
+            memory[art] = pygame.image.load(art).convert(8)
+            palette = memory[art].get_palette()
+            for c in palette:
+                c.g = int((c.r+c.b+c.g)/3.0)
+                c.r = 0
+                c.b = 0
+            memory[art].set_palette(palette)
             memory[art].set_colorkey([255,0,255])
         self.graphics = memory[art]
         self.surface = self.graphics
@@ -48,6 +56,21 @@ class Agent(object):
     def draw(self,engine):
         if not self.surface and self.art:
             self.load()
+        palette = self.graphics.get_palette()
+        for c in palette:
+            if self.gft:
+                if self.gfd==1:
+                    if c.g<255:
+                        c.g=c.g+1
+                if self.gfd==-1:
+                    if c.g>0:
+                        c.g=c.g-1
+        if self.gft:
+            self.gft-=1
+        else:
+            self.gfd = -self.gfd
+            self.gft=42
+        self.graphics.set_palette(palette)
         engine.surface.blit(self.surface,[self.pos[0]-self.hotspot[0],self.pos[1]-self.hotspot[1]])
     def rect(self):
         if not self.surface:

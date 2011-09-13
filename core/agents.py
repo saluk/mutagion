@@ -32,8 +32,8 @@ class Agent(object):
         self.hotspot = [0,0]
         self.rotation_on_rot = True
         self.visible = True
-        self.gfd = 1
-        self.gft = 42
+        self.gfd = {}
+        self.gft = {}
     def load(self,art=None):
         if not art:
             art = self.art
@@ -57,19 +57,25 @@ class Agent(object):
         if not self.surface and self.art:
             self.load()
         palette = self.graphics.get_palette()
-        for c in palette:
-            if self.gft:
-                if self.gfd==1:
+        for i,c in enumerate(palette):
+            if i not in self.gft:
+                self.gfd[i] = 1
+                self.gft[i] = 62
+            if self.gft[i]:
+                if self.gfd[i]==1:
                     if c.g<255:
                         c.g=c.g+1
-                if self.gfd==-1:
+                    else:
+                        self.gft[i] = 1
+                if self.gfd[i]==-1:
                     if c.g>0:
                         c.g=c.g-1
-        if self.gft:
-            self.gft-=1
-        else:
-            self.gfd = -self.gfd
-            self.gft=42
+                    else:
+                        self.gft[i] = 1
+                self.gft[i]-=1
+            else:
+                self.gfd[i] = -self.gfd[i]
+                self.gft[i] = 62
         self.graphics.set_palette(palette)
         engine.surface.blit(self.surface,[self.pos[0]-self.hotspot[0],self.pos[1]-self.hotspot[1]])
     def rect(self):

@@ -12,9 +12,10 @@ class Location(Model):
     def defaults(self):
         self.name = "Seattle"
         self.people = []
-    def turn(self):
+    def turn(self,context):
+        context["location"] = self
         for p in self.people:
-            p.turn(self)
+            p.turn(context)
     def add(self,p):
         self.people.append(p)
     def remove(self,p):
@@ -41,12 +42,16 @@ class Population(Model):
             for s in i.symptoms():
                 symptoms.add(s)
         return symptoms
-    def turn(self,location):
+    def turn(self,context):
+        context["population"] = self
         for s in self.symptoms():
             if s.name == "death":
-                location.remove(self)
+                context["location"].remove(self)
+                n = context.get("dead",0)
+                n+=1
+                context["dead"] = n
         for i in self.illnesses:
-            i.turn(location,self)
+            i.turn(context)
     def remove_disease(self,d):
         if d in self.illnesses:
             self.illnesses.remove(d)
@@ -112,12 +117,13 @@ class Disease(Model):
         if not s:
             return []
         return s.symptoms
-    def turn(self,location,person):
+    def turn(self,context):
+        context["disease"] = self
         print "turn",id(self)
-        self.spread(location)
+        self.spread(context["location"])
         self.age += 1
         if not self.get_stage():
-            person.remove_disease(self)
+            context["population"].remove_disease(self)
     def spread(self,location):
         s = self.get_stage()
         if not s:
@@ -178,9 +184,14 @@ inhabit(seattle,jane)
 for i in range(10):
     inhabit(seattle,Population(name="dummy%s"%i))
 t = 0
+dead = 0
 while seattle.people:
     print t
     t += 1
     for p in seattle.people:
         print p.name,p.symptoms()
-    seattle.turn()
+    print "# infected:",len([x for x in seattle.people if x.illnesses])
+    d = {}
+    seattle.turn(d)
+    dead += d.get("dead",0)
+    print "# dead:",dead

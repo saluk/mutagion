@@ -35,6 +35,7 @@ class Engine:
     def start(self):
         """Separate from __init__ in case we want to make the object before making the screen"""
         pygame.init()
+        pygame.mixer.init()
         self.make_screen()
         self.running = True
         self.clock = pygame.time.Clock()

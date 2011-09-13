@@ -32,9 +32,15 @@ class World(object):
         """As controller gets functions to check the state of things, input
         can be put here"""
         
+class MapWorld(World):
+    def play_music(self):
+        pygame.mixer.music.load("music/gurdonark_-_Glow.mp3")
+        pygame.mixer.music.play()
+        
 def make_world(engine):
     """This makes the starting world"""
-    w = World(engine)
+    w = MapWorld(engine)
     #Just put an icon somewhere
-    w.add(Agent(art="art/icons/ico.png",pos=[50,50]))
+    w.add(Agent(art="art/musa.gif",pos=[50,50]))
+    w.play_music()
     return w

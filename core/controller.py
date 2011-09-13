@@ -13,7 +13,10 @@ import pygame
 class Controller:
     def __init__(self,engine):
         self.engine = engine
+        self.mbdown = 0
+        self.mpos = [0,0]
     def input(self):
+        self.mbdown = 0
         engine = self.engine
         pygame.event.pump()
         for e in pygame.event.get():
@@ -44,3 +47,6 @@ class Controller:
     def handle_pygame_event(self,e):
         """Ideally, build this out with state so that the world
         can make a query like controller.enter_was_pressed or key_held_for(3)"""
+        if e.type == pygame.MOUSEBUTTONDOWN:
+            self.mbdown = 1
+            self.mpos = e.pos

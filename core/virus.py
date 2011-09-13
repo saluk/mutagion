@@ -11,6 +11,7 @@ class Model(object):
 class Location(Model):
     def defaults(self):
         self.name = "Seattle"
+        self.pos = [0,0]
         self.people = []
     def turn(self,context):
         context["location"] = self
@@ -163,35 +164,36 @@ stomach_pain = Symptom(name="stomach pain",visibility=2,lethality=1,spread=0)
 headache = Symptom(name="headache",visibility=2,lethality=0,spread=0)
 death = Symptom(name="death",visibility=10,lethality=10,spread=2,spread_types=['touch','air'])
         
-x = Disease(
-                stages=[
-                    Stage(length=1,spread=0,weakness=2,symptoms=[cough]),
-                    Stage(length=2,spread=1,weakness=1,symptoms=[cough,diarrhea,stomach_pain]),
-                    Stage(length=1,spread=2,weakness=1,symptoms=[death])
-                    ],
-                spread_methods=["air"],
-                name="H1N8M7G9"
-                )
-bob = Population(name="Bob")
-infect(x,bob)
-anna = Population(name="Anna")
-infect(x,anna)
-jane = Population(name="Jane")
-seattle = Location()
-inhabit(seattle,anna)
-inhabit(seattle,bob)
-inhabit(seattle,jane)
-for i in range(10):
-    inhabit(seattle,Population(name="dummy%s"%i))
-t = 0
-dead = 0
-while seattle.people:
-    print t
-    t += 1
-    for p in seattle.people:
-        print p.name,p.symptoms()
-    print "# infected:",len([x for x in seattle.people if x.illnesses])
-    d = {}
-    seattle.turn(d)
-    dead += d.get("dead",0)
-    print "# dead:",dead
+if __name__=="__main__":
+    x = Disease(
+                    stages=[
+                        Stage(length=1,spread=0,weakness=2,symptoms=[cough]),
+                        Stage(length=2,spread=1,weakness=1,symptoms=[cough,diarrhea,stomach_pain]),
+                        Stage(length=1,spread=2,weakness=1,symptoms=[death])
+                        ],
+                    spread_methods=["air"],
+                    name="H1N8M7G9"
+                    )
+    bob = Population(name="Bob")
+    infect(x,bob)
+    anna = Population(name="Anna")
+    infect(x,anna)
+    jane = Population(name="Jane")
+    seattle = Location()
+    inhabit(seattle,anna)
+    inhabit(seattle,bob)
+    inhabit(seattle,jane)
+    for i in range(10):
+        inhabit(seattle,Population(name="dummy%s"%i))
+    t = 0
+    dead = 0
+    while seattle.people:
+        print t
+        t += 1
+        for p in seattle.people:
+            print p.name,p.symptoms()
+        print "# infected:",len([x for x in seattle.people if x.illnesses])
+        d = {}
+        seattle.turn(d)
+        dead += d.get("dead",0)
+        print "# dead:",dead

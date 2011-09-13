@@ -30,7 +30,7 @@ class Agent(object):
         self.rot = rot
         self.art = art
         self.hotspot = [0,0]
-        self.rotation_on_rot = True
+        self.rotation_on_rot = False
         self.visible = True
         self.gfd = {}
         self.gft = {}
@@ -53,30 +53,31 @@ class Agent(object):
         if self.rotation_on_rot and self.surface:
             ang = math.atan2(-self.rot[1],self.rot[0])*180.0/math.pi
             self.surface = pygame.transform.rotate(self.graphics,ang)
+        if self.graphics:
+            palette = self.graphics.get_palette()
+            for i,c in enumerate(palette):
+                if i not in self.gft:
+                    self.gfd[i] = 1
+                    self.gft[i] = 62
+                if self.gft[i]:
+                    if self.gfd[i]==1:
+                        if c.g<220-2:
+                            c.g=c.g+2
+                        else:
+                            self.gft[i] = 1
+                    if self.gfd[i]==-1:
+                        if c.g>40+2:
+                            c.g=c.g-2
+                        else:
+                            self.gft[i] = 1
+                    self.gft[i]-=1
+                else:
+                    self.gfd[i] = -self.gfd[i]
+                    self.gft[i] = 62
+            self.graphics.set_palette(palette)
     def draw(self,engine):
         if not self.surface and self.art:
             self.load()
-        palette = self.graphics.get_palette()
-        for i,c in enumerate(palette):
-            if i not in self.gft:
-                self.gfd[i] = 1
-                self.gft[i] = 62
-            if self.gft[i]:
-                if self.gfd[i]==1:
-                    if c.g<255:
-                        c.g=c.g+1
-                    else:
-                        self.gft[i] = 1
-                if self.gfd[i]==-1:
-                    if c.g>0:
-                        c.g=c.g-1
-                    else:
-                        self.gft[i] = 1
-                self.gft[i]-=1
-            else:
-                self.gfd[i] = -self.gfd[i]
-                self.gft[i] = 62
-        self.graphics.set_palette(palette)
         engine.surface.blit(self.surface,[self.pos[0]-self.hotspot[0],self.pos[1]-self.hotspot[1]])
     def rect(self):
         if not self.surface:

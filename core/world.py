@@ -34,7 +34,7 @@ class World(object):
         
 class MapWorld(World):
     def play_music(self):
-        pygame.mixer.music.load("music/gurdonark_-_Glow.mp3")
+        pygame.mixer.music.load("music/gurdonark_-_Glow.ogg")
         pygame.mixer.music.play()
         
 def make_world(engine):

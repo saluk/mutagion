@@ -1,6 +1,8 @@
+Alabama
+
 [ANB]  33.58   85.85  Anniston,AL
 [AUO]  32.67   85.44  Auburn,AL
-[BHM]  33.57   86.75  Birmingham,AL
+[BHM]  33.57   86.75  Birmingham,AL*
 [CKL]  32.90   87.25  Centreville,AL
 [DHN]  31.32   85.45  Dothan,AL
 [OZR]  31.28   85.72  Fort Rucker,AL
@@ -138,10 +140,10 @@ Arizona
 [LUF]  33.53  112.38  Luke,AZ
 [PGA]  36.93  111.45  Page,AZ
 [0E4]  34.23  111.33  Payson,AZ
-[PHX]  33.43  112.02  Phoenix,AZ
+[PHX]  33.43  112.02  Phoenix,AZ*
 [PRC]  34.65  112.43  Prescott,AZ
 [E74]  32.82  109.68  Safford Awrs,AZ
-[SDL]  33.62  111.92  Scottsdale,AZ
+[SDL]  33.62  111.92  Scottsdale,AZ*
 [E03]  34.27  110.00  Show Low,AZ
 [SOW]  34.27  110.00  Show Low,AZ
 [TUS]  32.12  110.93  Tucson,AZ
@@ -162,7 +164,7 @@ Arkansas
 [HRO]  36.27   93.15  Harrison,AR
 [HOT]  34.48   93.10  Hot Springs,AR
 [JBR]  35.83   90.65  Jonesboro,AR
-[LIT]  35.22   92.38  Little Rock,AR
+[LIT]  35.22   92.38  Little Rock,AR*
 [LRF]  34.92   92.15  Little Rock,AR
 [LZK]  34.83   92.25  Little Rock,AR
 [PBF]  34.17   91.93  Pine Bluff,AR
@@ -215,7 +217,7 @@ California
 [LVK]  37.70  121.82  Livermore,CA
 [LGB]  33.82  118.15  Long Beach,CA
 [SLI]  33.78  118.05  Los Alamitos,CA
-[LAX]  33.93  118.40  Los Angeles,CA
+[LAX]  33.93  118.40  Los Angeles,CA*
 [MMH]  37.63  118.92  Mammoth Lks,CA
 [RIV]  33.88  117.27  March AFB,CA
 [MYV]  39.10  121.57  Marysville,CA
@@ -261,7 +263,7 @@ California
 [SDM]  32.57  116.98  San Diego,CA
 [SDM]  32.57  116.98  San Diego,CA
 [SEE]  32.82  116.97  San Diego,CA
-[51Q]  37.75  122.68  San Francisco,CA
+[51Q]  37.75  122.68  San Francisco,CA*
 [SFO]  37.62  122.38  San Francisco,CA
 [SJC]  37.37  121.92  San Jose,CA
 [RHV]  37.33  121.82  San Jose/Rei,CA
@@ -303,7 +305,7 @@ Colorado
 [COS]  38.82  104.72  Colo Sprgs,CO
 [CEZ]  37.30  108.63  Cortez,CO
 [CAG]  40.50  107.53  Craig-Moffat,CO
-[DEN]  39.75  104.87  Denver,CO
+[DEN]  39.75  104.87  Denver,CO*
 [DRO]  37.15  107.75  Durango,CO
 [EGE]  39.65  106.92  Eagle,CO
 [APA]  39.57  104.83  Englewood,CO
@@ -334,7 +336,7 @@ Connecticut
 [DXR]  41.37   73.48  Danbury,CT
 [GON]  41.33   72.05  Groton,CT
 [HFD]  41.73   72.65  Hartford,CT
-[30N]  41.22   72.67  New Haven,CT
+[30N]  41.22   72.67  New Haven,CT*
 [HVN]  41.27   72.88  New Haven,CT
 [N11]  41.27   72.90  New Haven,CT
 [18N]  41.30   72.08  New London,CT
@@ -343,13 +345,13 @@ Connecticut
 Delaware
 
 [DOV]  39.13   75.47  Dover,DE
-[ILG]  39.67   75.60  Wilmington,DE
+[ILG]  39.67   75.60  Wilmington,DE*
 
 District of Columbia
 
 
 [IAD]  38.95   77.46  Washington/Dulles,DC
-[DCA]  38.85   77.04  Washington/Natl,DC
+[DCA]  38.85   77.04  Washington/Natl,DC*
 
 Florida
 
@@ -371,7 +373,7 @@ Florida
 [GNV]  29.68   82.27  Gainesville,FL
 [HST]  25.48   80.38  Homestead,FL
 [HRT]  30.43   86.68  Hurlburt Fld,FL
-[CRG]  30.33   81.52  Jacksonville,FL
+[CRG]  30.33   81.52  Jacksonville,FL*
 [JAX]  30.50   81.70  Jacksonville,FL
 [NIP]  30.23   81.68  Jacksonville,FL
 [EYW]  24.55   81.75  Key West,FL
@@ -409,7 +411,7 @@ Georgia
 [ABY]  31.53   84.18  Albany,GA
 [AMG]  31.53   82.52  Alma,GA
 [AHN]  33.95   83.32  Athens,GA
-[ATL]  33.65   84.42  Atlanta,GA
+[ATL]  33.65   84.42  Atlanta,GA*
 [ATL]  33.65   84.42  Atlanta,GA
 [PDK]  33.88   84.30  Atlanta/Dklb,GA
 [FTY]  33.78   84.52  Atlanta/Fltn,GA
@@ -452,7 +454,7 @@ Hawaii
 
 Idaho
 
-[BOI]  43.57  116.22  Boise,ID
+[BOI]  43.57  116.22  Boise,ID*
 [BYI]  42.53  113.77  Burley,ID
 [U15]  44.52  114.22  Challis,ID
 [COE]  47.77  116.82  Coeur d'Alene,ID
@@ -484,7 +486,7 @@ Illinois
 [MDH]  37.78   89.25  Carbondale,IL
 [ENL]  38.51   89.09  Centralia,IL
 [CMI]  40.03   88.28  Champaign/Urbana,IL
-[CHI]  41.90   87.65  Chicago,IL
+[CHI]  41.90   87.65  Chicago,IL*
 [CGX]  41.87   87.62  Chicago/Meigs,IL
 [MDW]  41.78   87.75  Chicago/Midway,IL
 [ORD]  41.98   87.90  Chicago/O'hare,IL
@@ -521,7 +523,7 @@ Indiana
 [FWA]  41.00   85.20  Fort Wayne,IN
 [GYY]  41.62   87.42  Gary,IN
 [GUS]  40.65   86.15  Grissom AFB,IN
-[IND]  39.73   86.27  Indianapolis,IN
+[IND]  39.73   86.27  Indianapolis,IN*
 [MIE]  40.23   85.38  Muncie,IN
 [SBN]  41.70   86.32  South Bend,IN
 [HUF]  39.45   87.30  Terre Haute,IN
@@ -567,7 +569,7 @@ Kansas
 [SLN]  38.80   97.65  Salina,KS
 [TOP]  39.07   95.62  Topeka,KS
 [FOE]  38.95   95.67  Topeka/Forbe,KS
-[ICT]  37.65   97.43  Wichita,KS
+[ICT]  37.65   97.43  Wichita,KS*
 
 Kentucky
 
@@ -577,7 +579,7 @@ Kentucky
 [JKL]  37.60   83.32  Jackson,KY
 [LEX]  38.05   85.00  Lexington,KY
 [LOZ]  37.08   84.07  London,KY
-[LOU]  38.23   85.67  Louisville,KY
+[LOU]  38.23   85.67  Louisville,KY*
 [SDF]  38.18   85.73  Louisville,KY
 [OWB]  37.75   87.17  Owensboro,KY
 [PAH]  37.07   88.77  Paducah,KY
@@ -606,7 +608,7 @@ Louisiana
 [MLU]  32.52   92.05  Monroe,LA
 [PTN]  29.70   91.20  Morgan City,LA
 [ARA]  30.03   91.88  New Iberia,LA
-[MSY]  29.98   90.25  New Orleans,LA
+[MSY]  29.98   90.25  New Orleans,LA*
 [NBG]  29.83   90.02  New Orleans,LA
 [NEW]  30.03   90.03  New Orleans,LA
 [7R8]  28.30   91.98  S Marsh Isl,LA
@@ -628,13 +630,13 @@ Maine
 [PWM]  43.65   70.32  Portland,ME
 [PQI]  46.68   68.05  Presque Isle,ME
 [RKD]  44.07   69.12  Rockland,ME
-[RUM]  44.88   70.88  Rumford,ME
+[RUM]  44.88   70.88  Rumford,ME*
 
 Maryland
 
 [ADW]  38.82   76.87  Andrews AFB,MD
 [BAL]  39.18   76.67  Baltimore,MD
-[BWI]  39.18   76.67  Baltimore,MD
+[BWI]  39.18   76.67  Baltimore,MD*
 [MTN]  39.33   76.42  Baltimore,MD
 [FME]  39.08   76.77  Fort Meade,MD
 [HGR]  39.70   77.72  Hagerstown,MD
@@ -647,7 +649,7 @@ Massachusetts
 
 [BED]  42.47   71.28  Bedford,MA
 [BVY]  42.58   70.92  Beverly,MA
-[BOS]  42.37   71.03  Boston,MA
+[BOS]  42.37   71.03  Boston,MA*
 [30B]  41.78   70.50  Cape Cod Can,MA
 [CHH]  41.67   69.97  Chatham,MA
 [AYE]  42.57   71.60  Fort Devens,MA
@@ -673,7 +675,7 @@ Michigan
 [CIU]  46.25   84.47  Chippewa,MI
 [C10]  43.07   85.95  Coopersville,MI
 [P59]  47.47   87.85  Copper Harb,MI
-[DET]  42.42   83.02  Detroit,MI
+[DET]  42.42   83.02  Detroit,MI*
 [DTW]  42.23   83.33  Detroit,MI
 [ESC]  45.73   87.08  Escanaba,MI
 [FNT]  42.97   83.75  Flint/Bishop,MI
@@ -712,14 +714,14 @@ Minnesota
 [ELO]  47.90   91.82  Ely,MN
 [FRM]  43.65   94.42  Fairmont,MN
 [FFM]  46.30   96.07  Fergus Falls,MN
-[GPZ]  47.22   93.52  Grand Rapids,MN
+[GPZ]  47.22   93.52  Grand Rapids,MN*
 [HIB]  47.38   92.85  Hibbing,MN
 [INL]  48.57   93.38  Intl Falls,MN
 [Y69]  45.13   94.52  Litchfield,MN
 [MKT]  44.22   93.92  Mankato,MN
 [MML]  44.45   95.82  Marshall Arpt,MN
 [FCM]  44.83   93.47  Minneapolis,MN
-[MIC]  45.07   93.38  Minneapolis,MN
+[MIC]  45.07   93.38  Minneapolis,MN*
 [MSP]  44.88   93.22  Minneapolis,MN
 [PKD]  46.90   95.07  Park Rapids,MN
 [P39]  46.60   94.32  Pequot Lake,MN
@@ -740,7 +742,7 @@ Mississippi
 [GWO]  33.50   90.08  Greenwood,MS
 [GPT]  30.40   89.07  Gulfport,MS
 [PIB]  31.47   89.33  Hattiesburg,MS
-[JAN]  32.32   90.08  Jackson,MS
+[JAN]  32.32   90.08  Jackson,MS*
 [BIX]  30.42   88.92  Keesler AFB,MS
 [LUL]  31.67   89.17  Laurel,MS
 [MCB]  31.18   90.47  Mccomb,MS
@@ -758,7 +760,7 @@ Missouri
 [JEF]  38.60   92.17  Jefferson City,MO
 [JLN]  37.17   94.50  Joplin,MO
 [MCI]  39.32   94.72  Kansas City,MO
-[MKC]  39.12   94.60  Kansas City,MO
+[MKC]  39.12   94.60  Kansas City,MO*
 [IRK]  40.10   92.55  Kirksville,MO
 [UMN]  37.33   94.35  Monett,MO
 [MKO]  35.66   95.36  Muskogee,MO
@@ -776,7 +778,7 @@ Missouri
 
 Montana
 
-[BIL]  45.80  108.53  Billings,MT
+[BIL]  45.80  108.53  Billings,MT*
 [BZN]  45.78  111.15  Bozeman,MT
 [4BQ]  45.67  105.67  Broadus,MT
 [BTM]  45.95  112.50  Butte,MT
@@ -811,7 +813,7 @@ Nebraska
 [BBW]  41.43   99.65  Broken Bow,NE
 [BUB]  41.78   99.15  Burwell,NE
 [CDR]  42.83  103.08  Chadron,NE
-[OLU]  41.45   97.35  Columbus,NE
+[OLU]  41.45   97.35  Columbus,NE*
 [CZD]  40.87  100.00  Cozad,NE
 [FNB]  40.07   95.58  Falls City,NE
 [GRI]  40.97   98.32  Grand Island,NE
@@ -846,12 +848,12 @@ Nevada
 [HTH]  38.55  118.63  Hawthorne,NV
 [L63]  36.53  115.57  Ind Sprng Rn,NV
 [L76]  36.57  115.67  Ind Sprng Rn,NV
-[LAS]  36.08  115.17  Las Vegas,NV
+[LAS]  36.08  115.17  Las Vegas,NV*
 [LOL]  40.10  118.92  Lovelock,NV
 [DRA]  36.62  116.02  Mercury,NV
 [LSV]  36.23  115.03  Nellis AFB,NV
 [OWY]  42.58  116.17  Owyhee,NV
-[RNO]  39.50  119.78  Reno,NV
+[RNO]  39.50  119.78  Reno,NV*
 [TPH]  38.07  117.08  Tonopah,NV
 [AWH]  41.33  116.25  Wildhorse,NV
 [WMC]  40.90  117.80  Winnemucca,NV
@@ -865,7 +867,7 @@ New Hampshire
 [EEN]  42.90   72.27  Keene,NH
 [LCI]  43.57   71.43  Laconia,NH
 [LEB]  43.63   72.30  Lebanon,NH
-[MHT]  42.93   71.43  Manchester,NH
+[MHT]  42.93   71.43  Manchester,NH*
 [MWN]  44.27   71.30  Mt Washingtn,NH
 [ASH]  42.78   71.52  Nashua,NH
 [PSM]  43.08   70.82  Pease AFB,NH
@@ -873,14 +875,14 @@ New Hampshire
 
 New Jersey
 
-[ACY]  39.45   74.57  Atlantic Cty,NJ
+[ACY]  39.45   74.57  Atlantic Cty,NJ*
 [N78]  40.28   74.28  Barnegat Ls,NJ
 [CDW]  40.87   74.28  Fairfield,NJ
 [NEL]  40.03   74.35  Lakehurst,NJ
 [WRI]  40.02   74.60  Mcguire AFB,NJ
 [MIV]  39.37   75.07  Millville,NJ
 [MMU]  40.80   74.42  Morristown,NJ
-[EWR]  40.70   74.17  Newark Intl,NJ
+[EWR]  40.70   74.17  Newark Intl,NJ*
 [TEB]  40.85   74.05  Teterboro,NJ
 [TTN]  40.28   74.82  Trenton,NJ
 
@@ -904,7 +906,7 @@ New Mexico
 [4MY]  34.98  106.05  Moriarity,NM
 [E28]  32.90  106.40  Northrup Str,NM
 [RTN]  36.74  104.50  Raton,NM
-[ROW]  33.30  104.53  Roswell,NM
+[ROW]  33.30  104.53  Roswell,NM*
 [SAF]  35.62  106.08  Santa Fe,NM
 [SVC]  32.63  108.17  Silver City,NM
 [ONM]  34.07  106.90  Socorro,NM
@@ -930,7 +932,7 @@ New York
 [JHW]  42.15   79.25  Jamestown,NY
 [MSS]  44.93   74.85  Massena,NY
 [MSV]  41.70   74.80  Monticello,NY
-[NYC]  40.77   73.98  New York,NY
+[NYC]  40.77   73.98  New York,NY*
 [JFK]  40.65   73.78  New York/JFK,NY
 [LGA]  40.77   73.90  New York/LGA,NY
 [SWF]  41.50   74.10  Newburgh,NY
@@ -963,7 +965,7 @@ North Carolina
 [GSO]  36.08   79.95  Greensboro,NC
 [HKY]  35.75   81.38  Hickory,NC
 [HSS]  35.90   82.82  Hot Springs,NC
-[OAJ]  34.82   77.62  Jacksonville,NC
+[OAJ]  34.82   77.62  Jacksonville,NC*
 [ISO]  35.32   77.63  Kinston,NC
 [HFF]  35.03   79.50  Mackall Aaf,NC
 [MQI]  35.92   75.68  Manteo Arpt,NC
@@ -979,7 +981,7 @@ North Carolina
 
 North Dakota
 
-[BIS]  46.77  100.75  Bismarck,ND
+[BIS]  46.77  100.75  Bismarck,ND*
 [DVL]  48.12   98.90  Devil's Lake,ND
 [P11]  48.10   98.87  Devil's Lake,ND
 [DIK]  46.78  102.80  Dickenson,ND
@@ -997,7 +999,7 @@ Ohio
 
 [UNI]  39.21   82.23  Athens/Albany,OH
 [CAK]  40.92   81.43  Canton,OH
-[CVG]  39.05   84.67  Cincinnati,OH
+[CVG]  39.05   84.67  Cincinnati,OH*
 [LUK]  39.10   84.43  Cincinnati,OH
 [BKL]  41.52   81.68  Cleveland,OH
 [CGF]  41.57   81.48  Cleveland,OH
@@ -1027,7 +1029,7 @@ Oklahoma
 [LAW]  34.57   98.42  Lawton,OK
 [MLC]  34.88   95.78  Mcalester,OK
 [OUN]  35.23   97.47  Norman,OK
-[OKC]  35.40   97.60  Oklahoma Cty,OK
+[OKC]  35.40   97.60  Oklahoma Cty,OK*
 [PWA]  35.53   97.65  Oklahoma Cty,OK
 [PGO]  34.68   94.62  Page,OK
 [PNC]  36.73   97.10  Ponca City,OK
@@ -1057,7 +1059,7 @@ Oregon
 [OTH]  43.42  124.25  North Bend,OR
 [ONO]  44.02  117.02  Ontario,OR
 [PDT]  45.68  118.85  Pendleton,OR
-[PDX]  45.60  122.60  Portland,OR
+[PDX]  45.60  122.60  Portland,OR*
 [RDM]  44.27  121.15  Redmond,OR
 [RBG]  43.23  123.37  Roseburg,OR
 [SLE]  44.92  123.00  Salem,OR
@@ -1080,7 +1082,7 @@ Pennsylvania
 [JST]  40.32   78.83  Johnstown,PA
 [LNS]  40.13   76.30  Lancaster,PA
 [LBE]  40.28   79.40  Latrobe,PA
-[MDT]  40.20   76.77  Middletown,PA
+[MDT]  40.20   76.77  Middletown,PA*
 [MUI]  40.43   76.57  Muir,PA
 [PNE]  40.08   75.02  Nth Philadel,PA
 [PHL]  39.88   75.25  Philadelphia,PA
@@ -1098,14 +1100,14 @@ Rhode Island
 
 [BID]  41.17   71.58  Block Island,RI
 [OQU]  41.60   71.42  Nth Kingston,RI
-[PVD]  41.73   71.43  Providence,RI
+[PVD]  41.73   71.43  Providence,RI*
 [NCO]  41.36   71.25  Quonset Pt NAS,RI
 
 South Carolina
 
 [AND]  34.50   82.72  Anderson,SC
 [NBC]  32.48   80.72  Beaufort Mca,SC
-[CHS]  32.90   80.03  Charleston,SC
+[CHS]  32.90   80.03  Charleston,SC*
 [CAE]  33.95   81.12  Columbia,SC
 [FLO]  34.18   79.72  Florence,SC
 [GMU]  34.85   82.35  Greenville,SC
@@ -1133,7 +1135,7 @@ South Dakota
 [PIR]  44.38  100.28  Pierre,SD
 [RAP]  44.05  103.07  Rapid City,SD
 [REJ]  45.16  103.32  Redig,SD
-[FSD]  43.58   96.73  Sioux Falls,SD
+[FSD]  43.58   96.73  Sioux Falls,SD*
 [ATY]  44.92   97.15  Watertown,SD
 [YKN]  42.92   97.38  Yankton,SD
 
@@ -1149,7 +1151,7 @@ Tennessee
 [MEM]  35.05   90.00  Memphis Intl,TN
 [NQA]  35.35   89.87  Memphis NAS,TN
 [MGL]  35.15   85.51  Monteagle,TN
-[BNA]  36.12   86.68  Nashville,TN
+[BNA]  36.12   86.68  Nashville,TN*
 [MQY]  36.00   86.50  Smyrna,TN
 
 Texas
@@ -1174,7 +1176,7 @@ Texas
 [DHT]  36.02  102.55  Dalhart,TX
 [NBE]  32.73   96.97  Dallas NAS,TX
 [ADS]  32.97   96.83  Dallas/Addis,TX
-[DFW]  32.90   97.03  Dallas/FW,TX
+[DFW]  32.90   97.03  Dallas/FW,TX*
 [DAL]  32.85   96.85  Dallas/Love,TX
 [RBD]  32.68   96.87  Dallas/Redbr,TX
 [DRT]  29.37  100.92  Del Rio,TX
@@ -1245,7 +1247,7 @@ Utah
 [PVU]  40.22  111.72  Provo,UT
 [U67]  40.50  110.63  Roosevelt,UT
 [SGU]  37.08  113.60  Saint George,UT
-[SLC]  40.78  111.97  Salt Lake Ct,UT
+[SLC]  40.78  111.97  Salt Lake Ct,UT*
 [T62]  40.17  112.20  Tooele,UT
 [VEL]  40.45  109.52  Vernal,UT
 [ENV]  41.22  114.05  Wendover,UT
@@ -1257,12 +1259,12 @@ Vermont
 [EFK]  45.55   72.33  Newport,VT
 [RUT]  43.53   73.95  Rutland,VT
 [9B2]  44.42   72.02  St Johnsbury,VT
-[MNW]  42.88   72.88  Wilmington,VT
+[MNW]  42.88   72.88  Wilmington,VT*
 
 Virginia
 
 [CHO]  38.13   78.45  Charlottesvi,VA
-[W39]  37.50   76.20  Chesapeake,VA
+[W39]  37.50   76.20  Chesapeake,VA*
 [DAN]  36.57   79.33  Danville,VA
 [DAA]  38.72   77.18  Fort Belvoir,VA
 [FAF]  37.13   76.62  Fort Eustis,VA
@@ -1303,7 +1305,7 @@ Washington
 [PUW]  46.75  117.12  Pullman,WA
 [UIL]  47.95  124.55  Quillayute,WA
 [RNT]  47.50  122.22  Renton,WA
-[SEA]  47.45  122.30  Seattle,WA
+[SEA]  47.45  122.30  Seattle,WA*
 [BFI]  47.53  122.30  Seattle/Boeing,WA
 [SHN]  47.25  123.15  Shelton,WA
 [GEG]  47.63  117.53  Spokane,WA
@@ -1323,7 +1325,7 @@ West Virginia
 [CRW]  38.37   81.60  Charleston,WV
 [CKB]  39.28   80.23  Clarksburg,WV
 [EKN]  38.88   79.85  Elkins,WV
-[HTS]  38.37   82.55  Huntington,WV
+[HTS]  38.37   82.55  Huntington,WV*
 [LWB]  37.87   80.40  Lewisburg,WV
 [MRB]  39.40   77.98  Martinsburg,WV
 [MGW]  39.65   79.92  Morgantown,WV
@@ -1341,7 +1343,7 @@ Wisconsin
 [LNR]  43.20   90.18  Lone Rock,WI
 [MSN]  43.13   89.33  Madison,WI
 [MTW]  44.13   87.67  Manitowac,WI
-[MKE]  42.95   87.90  Milwaukee,WI
+[MKE]  42.95   87.90  Milwaukee,WI*
 [MWC]  43.12   88.05  Milwaukee,WI
 [CWA]  44.78   89.67  Mosinee,WI
 [EEW]  44.22   88.53  Neenah,WI
@@ -1357,7 +1359,7 @@ Wyoming
 [CPR]  42.92  106.47  Casper,WY
 [CYS]  41.15  104.82  Cheyenne,WY
 [COD]  44.52  109.02  Cody,WY
-[4DG]  42.75  105.38  Douglas,WY
+[4DG]  42.75  105.38  Douglas,WY*
 [EVW]  41.33  111.00  Evanston,WY
 [GCC]  44.35  105.53  Gillette,WY
 [JAC]  43.60  110.73  Jackson,WY

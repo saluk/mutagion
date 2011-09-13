@@ -56,6 +56,8 @@ class CityDrawer(Agent):
 
 class Panel(Agent):
     def update(self,world):
+        self.surface.fill([0,0,0])
+        self.update_surf()
         if not hasattr(self,"turnon"):
             self.turnon = None
         if self.turnon:
@@ -71,6 +73,8 @@ class Panel(Agent):
                     self.pos[0]=-200
                 if self.pos[0]<d:
                     self.pos[0]+=10
+    def update_surf(self):
+        pygame.draw.rect(self.surface,[0,255,0],[[0,0],[200,480]],2)
         
 class MapWorld(World):
     def play_music(self):
@@ -107,9 +111,13 @@ class MapWorld(World):
                 py = (-lat+48)/float(height)*480
                 self.cities.append(Location(name=city+", "+state,lat=lat,long=long,pos=[px,py]))
     def input(self,controller):
-        if controller.mbdown and self.over:
-            self.panel.turnon = self.over.pos[0]
-            self.panel.pos[0] = -200
+        if controller.mbdown:
+            if self.over:
+                self.panel.turnon = self.over.pos[0]
+                self.panel.pos[0] = -200
+            else:
+                self.panel.pos[0] = -200
+                self.panel.turnon = None
         
 def make_world(engine):
     """This makes the starting world"""

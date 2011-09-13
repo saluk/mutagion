@@ -41,6 +41,6 @@ def make_world(engine):
     """This makes the starting world"""
     w = MapWorld(engine)
     #Just put an icon somewhere
-    w.add(Agent(art="art/musa.gif",pos=[50,50]))
+    w.add(Agent(art="art/america.gif",pos=[50,50]))
     w.play_music()
     return w

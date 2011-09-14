@@ -113,7 +113,7 @@ class MapWorld(World):
     def play_music(self):
         pygame.mixer.music.load("music/gurdonark_-_Glow.ogg")
         pygame.mixer.music.play(-1)
-    def start(self):
+    def start(self,num_viruses=1):
         self.offset = [0,0]
         self.add(Agent(art="art/americalowres.png",pos=[0,0]))
         c = CityDrawer()
@@ -122,10 +122,11 @@ class MapWorld(World):
         self.panel = Panel(pos=[-200,0])
         self.panel.surface = pygame.Surface([200,480])
         self.add(self.panel)
+        self.num_viruses = num_viruses
         self.load_cities()
         self.play_music()
         self.over = None
-        self.turn_time = 10
+        self.turn_time = 60
         self.next_turn = self.turn_time
     def load_cities(self):
         self.cities = []
@@ -149,10 +150,11 @@ class MapWorld(World):
             c.travel_table(self.cities)
             for x in range(random.randint(4,14)):
                 c.add(gen_random_population())
-        random.shuffle(self.cities)
-        zero = self.cities[0]
-        p = random.choice(zero.people)
-        infect(badvirus,p)
+        for i in range(self.num_viruses):
+            random.shuffle(self.cities)
+            zero = self.cities[0]
+            p = random.choice(zero.people)
+            infect(badvirus,p)
     def input(self,controller):
         if controller.mbdown:
             if self.over:

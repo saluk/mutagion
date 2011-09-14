@@ -30,7 +30,6 @@ class Location(Model):
     def add(self,p):
         self.people.append(p)
     def remove(self,p):
-        print "removing",p.name
         if p in self.people:
             self.people.remove(p)
     def travel_table(self,city_list):
@@ -61,6 +60,7 @@ class Population(Model):
         self.mobility = 2  #how many turns between travelling
         self.trust = 0  #How likely they are to trust the media
         
+        self.last_travel = 0
         self.travel_history = []  #first entry is their home
         self.illnesses = []
         self.immunities = set()
@@ -74,6 +74,7 @@ class Population(Model):
     def turn(self,context):
         if self.dead:
             return
+        self.random_walk(context["location"])
         context["population"] = self
         for s in self.symptoms():
             if s.name == "death":
@@ -83,6 +84,13 @@ class Population(Model):
                 self.dead = True
         for i in self.illnesses:
             i.turn(context)
+    def random_walk(self,location):
+        self.last_travel += 1
+        if self.last_travel>=self.mobility:
+            self.last_travel = 0
+            l = random.choice(location.travelmap)
+            l[1].add(self)
+            location.remove(self)
     def remove_disease(self,d):
         if d in self.illnesses:
             self.illnesses.remove(d)

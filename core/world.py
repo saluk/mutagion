@@ -56,6 +56,8 @@ class CityDrawer(Agent):
                 px = 0
             if py<0:
                 py = 0
+            for near in c.travelmap:
+                pygame.draw.line(engine.surface,[50,50,50],c.pos,near[1].pos)
             engine.surface.blit(s,[px,py])
             
 class Text(Agent):
@@ -77,7 +79,6 @@ class Panel(Agent):
         py = 10
         if self.city:
             self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
-            py+=10
         if self.turnon:
             if self.turnon<640//2:
                 d = 640-200
@@ -137,6 +138,8 @@ class MapWorld(World):
                 px = (-long+123)/float(width)*640+25
                 py = (-lat+48)/float(height)*480
                 self.cities.append(Location(name=city+", "+state,lat=lat,long=long,pos=[px,py]))
+        for c in self.cities:
+            c.travel_table(self.cities)
     def input(self,controller):
         if controller.mbdown:
             if self.over:

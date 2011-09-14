@@ -7,6 +7,7 @@
 
 
 import pygame
+import random
 
 def fit(surf,size):
     surf = pygame.transform.scale(surf,size)
@@ -32,6 +33,7 @@ class Engine:
         self.clock = None
         self.world = None   #Change what world is set to to change between scenes or modes
         self.next_tick = 0.0
+        self.spread = .01
     def start(self):
         """Separate from __init__ in case we want to make the object before making the screen"""
         pygame.init()
@@ -65,12 +67,15 @@ class Engine:
     def draw_screen(self):
         showfps = self.show_fps
         self.window.fill([10,10,10])
-        def draw_segment(dest,surf,pos,size):
+        def draw_segment(dest,surf,pos,size,alpha=255):
             rp = [pos[0]*self.swidth,pos[1]*self.sheight]
             rs = [size[0]*self.swidth,size[1]*self.sheight]
             surf = fit(surf,rs)
+            if alpha!=255:
+                surf.set_alpha(alpha)
             dest.blit(surf,rp)
         draw_segment(self.window,self.surface,[0,0],[1,1])
+        draw_segment(self.window,self.surface,[random.random()*self.spread-self.spread/2.,random.random()*self.spread-self.spread/2.],[1,1],40)
         if showfps:
             self.window.blit(self.font.render(str(self.clock.get_fps()),1,[255,0,0]),[0,self.window.get_height()-12])
         pygame.display.flip()

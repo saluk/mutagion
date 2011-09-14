@@ -41,8 +41,12 @@ class CityDrawer(Agent):
             x,y = pygame.mouse.get_pos()
             if x>=c.pos[0]-8 and x<=c.pos[0]+8 and y>=c.pos[1]-8 and y<=c.pos[1]+8:
                 self.world.over = c
+        c = None
         if self.world.over:
             c = self.world.over
+        elif self.world.panel.city:
+            c = self.world.panel.city
+        if c:
             cname = engine.font.render(c.name,1,[0,0,0])
             s = cname.copy()
             s.fill([0,255,0])

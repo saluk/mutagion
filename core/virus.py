@@ -1,3 +1,5 @@
+import math
+
 class Model(object):
     def __init__(self,**kwargs):
         keys = dir(self)
@@ -7,6 +9,13 @@ class Model(object):
             if k not in keys:
                 self.attr.append(k)
         self.__dict__.update(kwargs)
+        
+class Player(Model):
+    def defaults(self):
+        self.budget = 1000   #Current budget
+        self.income = 1000   #How much we will get
+        self.max_budget = 1000   #Our budget can't exceed this
+        self.influence = 1    #How much influence we have
         
 class Location(Model):
     def defaults(self):
@@ -23,6 +32,19 @@ class Location(Model):
         print "removing",p.name
         if p in self.people:
             self.people.remove(p)
+    def travel_table(self,city_list):
+        """Calculate distance to each city in the list"""
+        self.travelmap = []
+        def dist(a,b):
+            return math.sqrt((a.pos[0]-b.pos[0])**2+(a.pos[1]-b.pos[1])**2)
+        for c in city_list:
+            if c == self:
+                continue
+            d = dist(c,self)
+            if d>100:
+                continue
+            self.travelmap.append((d,c))
+        self.travelmap.sort(key=lambda c:c[0])
 
 class Population(Model):
     def defaults(self):

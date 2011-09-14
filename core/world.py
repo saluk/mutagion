@@ -37,6 +37,9 @@ class CityDrawer(Agent):
     def draw(self,engine):
         self.world.over = None
         for c in self.world.cities:
+            for near in c.travelmap:
+                pygame.draw.line(engine.surface,[50,150,50],c.pos,near[1].pos)
+        for c in self.world.cities:
             pygame.draw.circle(engine.surface,[0,255,0],c.pos,4)
             x,y = pygame.mouse.get_pos()
             if x>=c.pos[0]-8 and x<=c.pos[0]+8 and y>=c.pos[1]-8 and y<=c.pos[1]+8:
@@ -56,8 +59,6 @@ class CityDrawer(Agent):
                 px = 0
             if py<0:
                 py = 0
-            for near in c.travelmap:
-                pygame.draw.line(engine.surface,[50,50,50],c.pos,near[1].pos)
             engine.surface.blit(s,[px,py])
             
 class Text(Agent):

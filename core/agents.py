@@ -65,12 +65,12 @@ class Agent(object):
                 if self.gft[i]:
                     if self.gfd[i]==1:
                         if c.g<220-2:
-                            c.g=c.g+2
+                            c.g=c.g+1
                         else:
                             self.gft[i] = 1
                     if self.gfd[i]==-1:
-                        if c.g>40+2:
-                            c.g=c.g-2
+                        if c.g>80+2:
+                            c.g=c.g-1
                         else:
                             self.gft[i] = 1
                     self.gft[i]-=1

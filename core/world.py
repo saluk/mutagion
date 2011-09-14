@@ -135,7 +135,6 @@ class Messages(Agent):
             o.pos[0]-=2
             x,y = world.engine.get_mouse_pos()
             if x>=o.pos[0] and x<=o.rect().right and y>=o.pos[1] and y<=o.rect().bottom:
-                print o.pos,x
                 self.over = o
             if o.pos[0]<-600:
                 self.objects.remove(o)
@@ -253,7 +252,11 @@ class MapWorld(World):
             infect(badvirus,p)
     def input(self,controller):
         if controller.mbdown:
-            if self.over:
+            if self.messagepanel.over:
+                self.panel.turnon = self.messagepanel.over.data[1]["city"].pos[0]
+                self.panel.pos[0] = -200
+                self.panel.city = self.messagepanel.over.data[1]["city"]
+            elif self.over:
                 self.panel.turnon = self.over.pos[0]
                 self.panel.pos[0] = -200
                 self.panel.city = self.over

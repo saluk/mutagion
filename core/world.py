@@ -34,23 +34,28 @@ class World(object):
     def input(self,controller):
         """As controller gets functions to check the state of things, input
         can be put here"""
-        
+def off(pos,offamt):
+    return [pos[0]+offamt[0],pos[1]+offamt[1]]
 class CityDrawer(Agent):
     def draw(self,engine):
+        offx,offy = self.pos
+        def of(p):
+            return off(p,[offx,offy])
         self.world.over = None
         for c in self.world.cities:
             for near in c.travelmap:
-                pygame.draw.line(engine.surface,[50,150,50],c.pos,near[1].pos)
+                pygame.draw.line(engine.surface,[50,150,50],of(c.pos),of(near[1].pos))
         for c in self.world.cities:
             color = [0,255,0]
             if c.get_infected():
                 color = [255,0,0]
-            pygame.draw.line(engine.surface,[0,0,0],c.pos,[c.pos[0],c.pos[1]+4])
+            pygame.draw.line(engine.surface,[0,0,0],of(c.pos),of([c.pos[0],c.pos[1]+4]))
             n = engine.font.render("%s"%len([pp for pp in c.people if not pp.dead]),1,[0,0,0])
-            engine.surface.blit(n,[c.pos[0]-n.get_width()//2,c.pos[1]+4])
-            pygame.draw.circle(engine.surface,color,c.pos,3)
-            x,y = pygame.mouse.get_pos()
-            if x>=c.pos[0]-8 and x<=c.pos[0]+8 and y>=c.pos[1]-8 and y<=c.pos[1]+8:
+            engine.surface.blit(n,of([c.pos[0]-n.get_width()//2,c.pos[1]+4]))
+            pygame.draw.circle(engine.surface,color,of(c.pos),3)
+            x,y = engine.get_mouse_pos()
+            p = of(c.pos)
+            if x>=p[0]-8 and x<=p[0]+8 and y>=p[1]-8 and y<=p[1]+8:
                 self.world.over = c
         c = None
         if self.world.over:
@@ -62,7 +67,7 @@ class CityDrawer(Agent):
             s = cname.copy()
             s.fill([0,255,0])
             s.blit(cname,[0,0])
-            px,py = [c.pos[0]-s.get_width()//2+10,c.pos[1]-s.get_height()//2-10]
+            px,py = of([c.pos[0]-s.get_width()//2+10,c.pos[1]-s.get_height()//2-10])
             if px<0:
                 px = 0
             if py<0:
@@ -122,15 +127,23 @@ class Messages(Agent):
         self.objects = []
         self.bg = pygame.Surface([640,40])
         self.bg.fill([0,0,0])
-        self.bg.set_alpha(50)
+        self.bg.set_alpha(150)
+        self.over = None
     def update(self,world):
+        self.over = None
         for o in self.objects[:]:
             o.pos[0]-=2
+            x,y = world.engine.get_mouse_pos()
+            if x>=o.pos[0] and x<=o.rect().right and y>=o.pos[1] and y<=o.rect().bottom:
+                print o.pos,x
+                self.over = o
             if o.pos[0]<-600:
                 self.objects.remove(o)
     def draw(self,engine):
         engine.surface.blit(self.bg,[0,440])
         [o.draw(engine) for o in self.objects]
+        if self.over and self.over.data[1].has_key("city"):
+            pygame.draw.line(engine.surface,[255,255,255],self.over.pos,self.over.data[1]["city"].pos)
     def right(self):
         if not self.objects:
             return 650
@@ -142,7 +155,7 @@ class PlayerPanel(Agent):
         self.objects = []
         self.bg = pygame.Surface([140,200])
         self.bg.fill([0,0,0])
-        self.bg.set_alpha(50)
+        self.bg.set_alpha(150)
         self.player = None
     def update(self,world):
         if self.player and not self.objects:
@@ -169,7 +182,7 @@ class MapWorld(World):
             random.seed(seed)
         self.offset = [0,0]
         self.add(Agent(art="art/americalowres.png",pos=[0,0]))
-        c = CityDrawer()
+        c = CityDrawer(pos=[0,0])
         c.world = self
         self.add(c)
         self.panel = Panel(pos=[-200,0])
@@ -257,14 +270,17 @@ class MapWorld(World):
         if self.messages:
             self.next_message -= 1
             if self.next_message<=0:
-                self.messagepanel.objects.append(Text(pos=[self.messagepanel.right(),460]).set_text(self.messages.pop(0)))
+                t = Text(pos=[self.messagepanel.right(),460])
+                t.data = self.messages.pop(0)
+                t.set_text(t.data[0])
+                self.messagepanel.objects.append(t)
                 self.next_message = self.message_time
     def turn(self):
         d = {"news":[],"world":self}
         [c.turn(d) for c in self.cities]
         for n in d["news"]:
             if n["type"] == "deaths":
-                msg = "%(amount)s reported dead in %(city)s"%n
+                msg = ("%(amount)s reported dead in %(cityname)s"%n,n)
             self.messages.append(msg)
         
 def make_world(engine):

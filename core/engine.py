@@ -10,7 +10,7 @@ import pygame
 import random
 
 def fit(surf,size):
-    surf = pygame.transform.scale(surf,size)
+    surf = pygame.transform.smoothscale(surf,size)
     return surf
 
 class Engine:
@@ -62,6 +62,11 @@ class Engine:
         self.surface = pygame.Surface([self.iwidth,self.iheight]).convert()
         self.blank = self.surface.convert()
         self.blank.fill([0,0,0])
+    def get_mouse_pos(self):
+        x,y = pygame.mouse.get_pos()
+        x=int(x*(self.iwidth/float(self.swidth)))
+        y=int(y*(self.iheight/float(self.sheight)))
+        return x,y
     def clear_screen(self):
         self.surface.blit(self.blank,[0,0])
     def draw_screen(self):

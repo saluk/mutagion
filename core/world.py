@@ -99,18 +99,18 @@ class Panel(Agent):
         if self.city:
             self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
         if self.turnon:
-            if self.turnon<640//2:
-                d = 640-200
+            if self.turnon<240:
+                d = 300
                 if self.pos[0]<d:
                     self.pos[0]=640
                 if self.pos[0]>d:
-                    self.pos[0]-=10
+                    self.pos[0]-=20
             else:
                 d = 0
                 if self.pos[0]>d:
                     self.pos[0]=-200
                 if self.pos[0]<d:
-                    self.pos[0]+=10
+                    self.pos[0]+=20
     def draw(self,engine):
         self.surface.fill([0,0,0])
         pygame.draw.rect(self.surface,[0,255,0],[[0,0],[200,480]],2)

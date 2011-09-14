@@ -351,7 +351,7 @@ District of Columbia
 
 
 [IAD]  38.95   77.46  Washington/Dulles,DC
-[DCA]  38.85   77.04  Washington/Natl,DC*
+[DCA]  38.85   78.04  Washington/Natl,DC*
 
 Florida
 

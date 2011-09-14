@@ -5,6 +5,7 @@
 
 import pygame
 import random
+import time
 from virus import *
 from agents import *
 
@@ -44,6 +45,9 @@ class CityDrawer(Agent):
             color = [0,255,0]
             if c.get_infected():
                 color = [255,0,0]
+            pygame.draw.line(engine.surface,[0,0,0],c.pos,[c.pos[0],c.pos[1]+4])
+            n = engine.font.render("%s"%len([pp for pp in c.people if not pp.dead]),1,[0,0,0])
+            engine.surface.blit(n,[c.pos[0]-n.get_width()//2,c.pos[1]+4])
             pygame.draw.circle(engine.surface,color,c.pos,3)
             x,y = pygame.mouse.get_pos()
             if x>=c.pos[0]-8 and x<=c.pos[0]+8 and y>=c.pos[1]-8 and y<=c.pos[1]+8:
@@ -67,6 +71,7 @@ class CityDrawer(Agent):
             
 class Text(Agent):
     def set_text(self,text):
+        self.surface = None
         self.text = text
         return self
     def render(self,engine):
@@ -132,11 +137,36 @@ class Messages(Agent):
         last = self.objects[-1]
         return max(last.rect().right+10,650)
         
+class PlayerPanel(Agent):
+    def init(self):
+        self.objects = []
+        self.bg = pygame.Surface([140,200])
+        self.bg.fill([0,0,0])
+        self.bg.set_alpha(50)
+        self.player = None
+    def update(self,world):
+        if self.player and not self.objects:
+            x=self.pos[0]+2
+            y=self.pos[1]+2
+            self.objects.append(Agent(art="art/dollar.png",pos=[x,y]))
+            self.dollar_text = Text(pos=[x+20,y])
+            self.objects.append(self.dollar_text)
+            y+=10
+        if self.player:
+            self.dollar_text.set_text("%(budget)s / +%(income)s"%self.player.__dict__)
+    def draw(self,engine):
+        engine.surface.blit(self.bg,self.pos)
+        [o.draw(engine) for o in self.objects]
+        
 class MapWorld(World):
     def play_music(self):
         pygame.mixer.music.load("music/gurdonark_-_Glow.ogg")
         pygame.mixer.music.play(-1)
-    def start(self,num_viruses=1):
+    def start(self,num_viruses=1,seed=int(time.time()*100)):
+        seed = 131603110005
+        seed = "i like cats"
+        if seed:
+            random.seed(seed)
         self.offset = [0,0]
         self.add(Agent(art="art/americalowres.png",pos=[0,0]))
         c = CityDrawer()
@@ -154,8 +184,12 @@ class MapWorld(World):
         self.messages = []
         self.message_time = 60*2
         self.next_message = 0
-        self.messagepanel = Messages(self.engine)
+        self.messagepanel = Messages()
         self.add(self.messagepanel)
+        self.playerpanel = PlayerPanel(pos=[510,240])
+        self.add(self.playerpanel)
+        self.player = Player()
+        self.playerpanel.player = self.player
     def load_cities(self):
         self.cities = []
         f = open("dat/cities.txt")

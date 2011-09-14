@@ -4,6 +4,7 @@
 # subclass for your own scenes to actually do things
 
 import pygame
+import random
 from virus import *
 from agents import *
 
@@ -40,7 +41,10 @@ class CityDrawer(Agent):
             for near in c.travelmap:
                 pygame.draw.line(engine.surface,[50,150,50],c.pos,near[1].pos)
         for c in self.world.cities:
-            pygame.draw.circle(engine.surface,[0,255,0],c.pos,4)
+            color = [0,255,0]
+            if c.get_infected():
+                color = [255,0,0]
+            pygame.draw.circle(engine.surface,color,c.pos,4)
             x,y = pygame.mouse.get_pos()
             if x>=c.pos[0]-8 and x<=c.pos[0]+8 and y>=c.pos[1]-8 and y<=c.pos[1]+8:
                 self.world.over = c
@@ -121,6 +125,7 @@ class MapWorld(World):
         self.load_cities()
         self.play_music()
         self.over = None
+        self.next_turn = 10
     def load_cities(self):
         self.cities = []
         f = open("dat/cities.txt")
@@ -141,6 +146,12 @@ class MapWorld(World):
                 self.cities.append(Location(name=city+", "+state,lat=lat,long=long,pos=[px,py]))
         for c in self.cities:
             c.travel_table(self.cities)
+            for x in range(random.randint(4,14)):
+                c.add(gen_random_population())
+        random.shuffle(self.cities)
+        zero = self.cities[0]
+        p = random.choice(zero.people)
+        infect(badvirus,p)
     def input(self,controller):
         if controller.mbdown:
             if self.over:
@@ -150,6 +161,14 @@ class MapWorld(World):
             else:
                 self.panel.pos[0] = -200
                 self.panel.turnon = None
+    def update(self):
+        super(MapWorld,self).update()
+        self.next_turn -= 1
+        if self.next_turn <=0:
+            self.next_turn = 60*10
+            self.turn()
+    def turn(self):
+        [c.turn({}) for c in self.cities]
         
 def make_world(engine):
     """This makes the starting world"""

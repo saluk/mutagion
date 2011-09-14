@@ -44,7 +44,7 @@ class CityDrawer(Agent):
             color = [0,255,0]
             if c.get_infected():
                 color = [255,0,0]
-            pygame.draw.circle(engine.surface,color,c.pos,4)
+            pygame.draw.circle(engine.surface,color,c.pos,3)
             x,y = pygame.mouse.get_pos()
             if x>=c.pos[0]-8 and x<=c.pos[0]+8 and y>=c.pos[1]-8 and y<=c.pos[1]+8:
                 self.world.over = c

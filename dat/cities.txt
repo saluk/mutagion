@@ -882,7 +882,7 @@ New Jersey
 [WRI]  40.02   74.60  Mcguire AFB,NJ
 [MIV]  39.37   75.07  Millville,NJ
 [MMU]  40.80   74.42  Morristown,NJ
-[EWR]  40.70   74.17  Newark,NJ*
+[EWR]notaccurate  40.70   75.17  Newark,NJ*
 [TEB]  40.85   74.05  Teterboro,NJ
 [TTN]  40.28   74.82  Trenton,NJ
 

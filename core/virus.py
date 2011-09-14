@@ -24,9 +24,12 @@ class Location(Model):
         self.pos = [0,0]
         self.people = []
     def turn(self,context):
+        anydead = self.get_infected()
         context["location"] = self
         for p in self.people:
             p.turn(context)
+        if not anydead and self.get_infected():
+            context["news"].append({"type":"deaths","amount":self.get_infected(),"city":self.name})
     def add(self,p):
         self.people.append(p)
     def remove(self,p):

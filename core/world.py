@@ -69,9 +69,13 @@ class Text(Agent):
     def set_text(self,text):
         self.text = text
         return self
+    def render(self,engine):
+        if not self.surface:
+            self.surface = engine.font.render(self.text,1,[0,255,0])
     def draw(self,engine):
-        t = engine.font.render(self.text,1,[0,255,0])
-        engine.surface.blit(t,self.pos)
+        if not self.surface:
+            self.render(engine)
+        engine.surface.blit(self.surface,self.pos)
 
 class Panel(Agent):
     def init(self):
@@ -107,7 +111,26 @@ class Panel(Agent):
             o.pos[1]+=self.pos[1]
             o.draw(engine)
             o.pos = p
-        
+
+class Messages(Agent):
+    def init(self):
+        self.objects = []
+        self.bg = pygame.Surface([640,40])
+        self.bg.fill([0,0,0])
+        self.bg.set_alpha(50)
+    def update(self,world):
+        for o in self.objects[:]:
+            o.pos[0]-=1
+            if o.pos[0]<-200:
+                self.objects.remove(o)
+    def draw(self,engine):
+        engine.surface.blit(self.bg,[0,440])
+        [o.draw(engine) for o in self.objects]
+    def right(self):
+        if not self.objects:
+            return 640
+        last = self.objects[-1]
+        return last.pos[0]+200
         
 class MapWorld(World):
     def play_music(self):
@@ -128,6 +151,11 @@ class MapWorld(World):
         self.over = None
         self.turn_time = 60
         self.next_turn = self.turn_time
+        self.messages = []
+        self.message_time = 60*2
+        self.next_message = 0
+        self.messagepanel = Messages(self.engine)
+        self.add(self.messagepanel)
     def load_cities(self):
         self.cities = []
         f = open("dat/cities.txt")
@@ -164,14 +192,25 @@ class MapWorld(World):
             else:
                 self.panel.pos[0] = -200
                 self.panel.turnon = None
+                self.panel.city = None
     def update(self):
         super(MapWorld,self).update()
         self.next_turn -= 1
         if self.next_turn <=0:
             self.next_turn = self.turn_time
             self.turn()
+        if self.messages:
+            self.next_message -= 1
+            if self.next_message<=0:
+                self.messagepanel.objects.append(Text(pos=[self.messagepanel.right(),460]).set_text(self.messages.pop(0)))
+                self.next_message = self.message_time
     def turn(self):
-        [c.turn({}) for c in self.cities]
+        d = {"news":[],"world":self}
+        [c.turn(d) for c in self.cities]
+        for n in d["news"]:
+            if n["type"] == "deaths":
+                msg = "%(amount)s reported dead in %(city)s"%n
+            self.messages.append(msg)
         
 def make_world(engine):
     """This makes the starting world"""

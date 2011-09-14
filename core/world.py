@@ -87,7 +87,7 @@ class Text(Agent):
             self.render(engine)
         engine.surface.blit(self.surface,self.pos)
 
-class Panel(Agent):
+class CityPanel(Agent):
     def init(self):
         self.turnon = None
         self.city = None
@@ -113,8 +113,8 @@ class Panel(Agent):
                     self.pos[0]+=20
     def draw(self,engine):
         self.surface.fill([0,0,0])
-        pygame.draw.rect(self.surface,[0,255,0],[[0,0],[200,480]],2)
-        super(Panel,self).draw(engine)
+        pygame.draw.rect(self.surface,[0,255,0],[[0,0],[200,400]],2)
+        super(CityPanel,self).draw(engine)
         for o in self.objects:
             p = o.pos[:]
             o.pos[0]+=self.pos[0]
@@ -184,8 +184,8 @@ class MapWorld(World):
         c = CityDrawer(pos=[0,0])
         c.world = self
         self.add(c)
-        self.panel = Panel(pos=[-200,0])
-        self.panel.surface = pygame.Surface([200,480])
+        self.panel = CityPanel(pos=[-200,0])
+        self.panel.surface = pygame.Surface([200,400])
         self.add(self.panel)
         self.num_viruses = num_viruses
         self.load_cities()

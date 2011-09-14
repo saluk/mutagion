@@ -128,9 +128,9 @@ class Messages(Agent):
         [o.draw(engine) for o in self.objects]
     def right(self):
         if not self.objects:
-            return 640
+            return 650
         last = self.objects[-1]
-        return last.pos[0]+200
+        return last.rect().right+10
         
 class MapWorld(World):
     def play_music(self):

@@ -28,8 +28,8 @@ class Location(Model):
         context["location"] = self
         for p in self.people:
             p.turn(context)
-        if not anydead and self.get_infected():
-            context["news"].append({"type":"deaths","amount":self.get_infected(),"city":self.name})
+        if anydead != self.get_infected():
+            context["news"].append({"type":"deaths","amount":self.get_infected_count(),"city":self.name})
     def add(self,p):
         self.people.append(p)
     def remove(self,p):
@@ -51,6 +51,8 @@ class Location(Model):
     def get_infected(self):
         """How infected are we?"""
         return len([x for x in self.people if x.dead])
+    def get_infected_count(self):
+        return sum(x.size for x in self.people if x.dead)
 
 class Population(Model):
     def defaults(self):

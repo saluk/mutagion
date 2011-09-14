@@ -34,6 +34,9 @@ class Agent(object):
         self.visible = True
         self.gfd = {}
         self.gft = {}
+        self.init()
+    def init(self):
+        pass
     def load(self,art=None):
         if not art:
             art = self.art

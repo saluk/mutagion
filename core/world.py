@@ -53,13 +53,27 @@ class CityDrawer(Agent):
             if py<0:
                 py = 0
             engine.surface.blit(s,[px,py])
+            
+class Text(Agent):
+    def set_text(self,text):
+        self.text = text
+        return self
+    def draw(self,engine):
+        t = engine.font.render(self.text,1,[0,255,0])
+        engine.surface.blit(t,self.pos)
 
 class Panel(Agent):
+    def init(self):
+        self.turnon = None
+        self.city = None
+        self.objects = []
     def update(self,world):
-        self.surface.fill([0,0,0])
-        self.update_surf()
-        if not hasattr(self,"turnon"):
-            self.turnon = None
+        self.objects = []
+        px = 10
+        py = 10
+        if self.city:
+            self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
+            py+=10
         if self.turnon:
             if self.turnon<640//2:
                 d = 640-200
@@ -73,8 +87,17 @@ class Panel(Agent):
                     self.pos[0]=-200
                 if self.pos[0]<d:
                     self.pos[0]+=10
-    def update_surf(self):
+    def draw(self,engine):
+        self.surface.fill([0,0,0])
         pygame.draw.rect(self.surface,[0,255,0],[[0,0],[200,480]],2)
+        super(Panel,self).draw(engine)
+        for o in self.objects:
+            p = o.pos[:]
+            o.pos[0]+=self.pos[0]
+            o.pos[1]+=self.pos[1]
+            o.draw(engine)
+            o.pos = p
+        
         
 class MapWorld(World):
     def play_music(self):
@@ -115,6 +138,7 @@ class MapWorld(World):
             if self.over:
                 self.panel.turnon = self.over.pos[0]
                 self.panel.pos[0] = -200
+                self.panel.city = self.over
             else:
                 self.panel.pos[0] = -200
                 self.panel.turnon = None

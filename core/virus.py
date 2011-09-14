@@ -23,6 +23,9 @@ class Location(Model):
         self.name = "Seattle"
         self.pos = [0,0]
         self.people = []
+        self.population = 1000
+        self.area = 1000
+        self.density = 1000
     def turn(self,context):
         anydead = self.get_infected()
         context["location"] = self

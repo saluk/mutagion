@@ -174,10 +174,31 @@ class MapWorld(World):
                 px = (-long+123)/float(width)*640+25
                 py = (-lat+48)/float(height)*480
                 self.cities.append(Location(name=city+", "+state,lat=lat,long=long,pos=[px,py]))
+        f = open("dat/population.txt")
+        pops = {}
+        for l in f.read().split("\n"):
+            stuff = l.split("\t")
+            cn = stuff[1]
+            pop = float(stuff[3].replace(",",""))
+            area = float(stuff[4].replace(",",""))
+            dens = float(stuff[5].replace(",",""))
+            pops[cn.lower().strip()] = {"population":pop,"area":area,"density":dens}
         for c in self.cities:
+            c.__dict__.update(pops[c.name.lower().split(",")[0]])
             c.travel_table(self.cities)
-            for x in range(random.randint(4,14)):
-                c.add(gen_random_population())
+            numpeeps = int(min((c.population/10000000.0)*100,15))
+            avg_size = c.population/float(numpeeps)
+            pop = c.population
+            for x in range(numpeeps):
+                p = gen_random_population()
+                p.size = avg_size+(random.randint(-avg_size//3,avg_size//3))
+                pop -= p.size
+                if pop<0:
+                    p.size+=pop
+                p.size = int(p.size)
+                c.add(p)
+            if pop:
+                random.choice(c.people).size+=int(pop)
         for i in range(self.num_viruses):
             random.shuffle(self.cities)
             zero = self.cities[0]

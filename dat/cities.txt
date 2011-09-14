@@ -630,7 +630,7 @@ Maine
 [PWM]  43.65   70.32  Portland,ME
 [PQI]  46.68   68.05  Presque Isle,ME
 [RKD]  44.07   69.12  Rockland,ME
-[RUM]  44.88   70.88  Rumford,ME*
+[RUM]  44.88   70.88  Rumford,ME
 
 Maryland
 
@@ -875,14 +875,14 @@ New Hampshire
 
 New Jersey
 
-[ACY]  39.45   74.57  Atlantic Cty,NJ*
+[ACY]  39.45   74.57  Atlantic City,NJ
 [N78]  40.28   74.28  Barnegat Ls,NJ
 [CDW]  40.87   74.28  Fairfield,NJ
 [NEL]  40.03   74.35  Lakehurst,NJ
 [WRI]  40.02   74.60  Mcguire AFB,NJ
 [MIV]  39.37   75.07  Millville,NJ
 [MMU]  40.80   74.42  Morristown,NJ
-[EWR]  40.70   74.17  Newark Intl,NJ
+[EWR]  40.70   74.17  Newark,NJ*
 [TEB]  40.85   74.05  Teterboro,NJ
 [TTN]  40.28   74.82  Trenton,NJ
 
@@ -981,11 +981,11 @@ North Carolina
 
 North Dakota
 
-[BIS]  46.77  100.75  Bismarck,ND*
+[BIS]  46.77  100.75  Bismarck,ND
 [DVL]  48.12   98.90  Devil's Lake,ND
 [P11]  48.10   98.87  Devil's Lake,ND
 [DIK]  46.78  102.80  Dickenson,ND
-[FAR]  46.90   96.80  Fargo,ND
+[FAR]  46.90   96.80  Fargo,ND*
 [GFK]  47.95   97.18  Grand Forks,ND
 [RDR]  47.97   97.40  Grand Forks,ND
 [JMS]  46.92   98.68  Jamestown,ND
@@ -1029,8 +1029,8 @@ Oklahoma
 [LAW]  34.57   98.42  Lawton,OK
 [MLC]  34.88   95.78  Mcalester,OK
 [OUN]  35.23   97.47  Norman,OK
-[OKC]  35.40   97.60  Oklahoma Cty,OK*
-[PWA]  35.53   97.65  Oklahoma Cty,OK
+[OKC]  35.40   97.60  Oklahoma City,OK*
+[PWA]  35.53   97.65  Oklahoma City,OK
 [PGO]  34.68   94.62  Page,OK
 [PNC]  36.73   97.10  Ponca City,OK
 [SWO]  36.16   97.09  Stillwater,OK
@@ -1082,12 +1082,12 @@ Pennsylvania
 [JST]  40.32   78.83  Johnstown,PA
 [LNS]  40.13   76.30  Lancaster,PA
 [LBE]  40.28   79.40  Latrobe,PA
-[MDT]  40.20   76.77  Middletown,PA*
+[MDT]  40.20   76.77  Middletown,PA
 [MUI]  40.43   76.57  Muir,PA
 [PNE]  40.08   75.02  Nth Philadel,PA
 [PHL]  39.88   75.25  Philadelphia,PA
 [PSB]  41.47   78.13  Philipsburg,PA
-[AGC]  40.35   79.93  Pittsburgh,PA
+[AGC]  40.35   79.93  Pittsburgh,PA*
 [PIT]  40.50   80.22  Pittsburgh,PA
 [RDG]  40.38   75.97  Reading,PA
 [43M]  39.73   77.43  Site R,PA
@@ -1247,7 +1247,7 @@ Utah
 [PVU]  40.22  111.72  Provo,UT
 [U67]  40.50  110.63  Roosevelt,UT
 [SGU]  37.08  113.60  Saint George,UT
-[SLC]  40.78  111.97  Salt Lake Ct,UT*
+[SLC]  40.78  111.97  Salt Lake City,UT*
 [T62]  40.17  112.20  Tooele,UT
 [VEL]  40.45  109.52  Vernal,UT
 [ENV]  41.22  114.05  Wendover,UT
@@ -1259,7 +1259,7 @@ Vermont
 [EFK]  45.55   72.33  Newport,VT
 [RUT]  43.53   73.95  Rutland,VT
 [9B2]  44.42   72.02  St Johnsbury,VT
-[MNW]  42.88   72.88  Wilmington,VT*
+[MNW]  42.88   72.88  Wilmington,VT
 
 Virginia
 
@@ -1325,7 +1325,7 @@ West Virginia
 [CRW]  38.37   81.60  Charleston,WV
 [CKB]  39.28   80.23  Clarksburg,WV
 [EKN]  38.88   79.85  Elkins,WV
-[HTS]  38.37   82.55  Huntington,WV*
+[HTS]  38.37   82.55  Huntington,WV
 [LWB]  37.87   80.40  Lewisburg,WV
 [MRB]  39.40   77.98  Martinsburg,WV
 [MGW]  39.65   79.92  Morgantown,WV
@@ -1359,7 +1359,7 @@ Wyoming
 [CPR]  42.92  106.47  Casper,WY
 [CYS]  41.15  104.82  Cheyenne,WY
 [COD]  44.52  109.02  Cody,WY
-[4DG]  42.75  105.38  Douglas,WY*
+[4DG]  42.75  105.38  Douglas,WY
 [EVW]  41.33  111.00  Evanston,WY
 [GCC]  44.35  105.53  Gillette,WY
 [JAC]  43.60  110.73  Jackson,WY

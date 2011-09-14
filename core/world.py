@@ -125,7 +125,8 @@ class MapWorld(World):
         self.load_cities()
         self.play_music()
         self.over = None
-        self.next_turn = 10
+        self.turn_time = 10
+        self.next_turn = self.turn_time
     def load_cities(self):
         self.cities = []
         f = open("dat/cities.txt")
@@ -165,7 +166,7 @@ class MapWorld(World):
         super(MapWorld,self).update()
         self.next_turn -= 1
         if self.next_turn <=0:
-            self.next_turn = 60*10
+            self.next_turn = self.turn_time
             self.turn()
     def turn(self):
         [c.turn({}) for c in self.cities]

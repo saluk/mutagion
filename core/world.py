@@ -120,8 +120,8 @@ class Messages(Agent):
         self.bg.set_alpha(50)
     def update(self,world):
         for o in self.objects[:]:
-            o.pos[0]-=1
-            if o.pos[0]<-200:
+            o.pos[0]-=2
+            if o.pos[0]<-600:
                 self.objects.remove(o)
     def draw(self,engine):
         engine.surface.blit(self.bg,[0,440])
@@ -130,7 +130,7 @@ class Messages(Agent):
         if not self.objects:
             return 650
         last = self.objects[-1]
-        return last.rect().right+10
+        return max(last.rect().right+10,650)
         
 class MapWorld(World):
     def play_music(self):

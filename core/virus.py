@@ -1,4 +1,5 @@
 import math
+import random
 
 class Model(object):
     def __init__(self,**kwargs):
@@ -9,7 +10,7 @@ class Model(object):
             if k not in keys:
                 self.attr.append(k)
         self.__dict__.update(kwargs)
-        
+
 class Player(Model):
     def defaults(self):
         self.budget = 1000   #Current budget
@@ -45,6 +46,9 @@ class Location(Model):
                 continue
             self.travelmap.append((d,c))
         self.travelmap.sort(key=lambda c:c[0])
+    def get_infected(self):
+        """How infected are we?"""
+        return len([x for x in self.people if x.dead])
 
 class Population(Model):
     def defaults(self):
@@ -52,6 +56,7 @@ class Population(Model):
         self.size = 1000 #how many people I represent
         self.lifestyle = 0  #healthy lifestyle? poor? smokers? etc
         self.race = "white"  #what race they are
+        self.sex = "male"
         self.age = 18   #average age
         self.mobility = 2  #how many turns between travelling
         self.trust = 0  #How likely they are to trust the media
@@ -59,6 +64,7 @@ class Population(Model):
         self.travel_history = []  #first entry is their home
         self.illnesses = []
         self.immunities = set()
+        self.dead = False
     def symptoms(self):
         symptoms = set()
         for i in self.illnesses:
@@ -66,18 +72,46 @@ class Population(Model):
                 symptoms.add(s)
         return symptoms
     def turn(self,context):
+        if self.dead:
+            return
         context["population"] = self
         for s in self.symptoms():
             if s.name == "death":
-                context["location"].remove(self)
                 n = context.get("dead",0)
                 n+=1
                 context["dead"] = n
+                self.dead = True
         for i in self.illnesses:
             i.turn(context)
     def remove_disease(self,d):
         if d in self.illnesses:
             self.illnesses.remove(d)
+
+names = []
+f = open("dat/people.txt")
+mode = None
+for l in f.read().split("\n"):
+    if l.startswith("name/"):
+        spl = l.split("/")
+        mode = spl[0]
+        race,sex = spl[1:]
+    elif mode=="name":
+        if l.strip():
+            n = l.strip()
+            names.append({"race":race,"sex":sex,"name":n})
+def gen_random_population():
+    random.shuffle(names)
+    n = names[0]#.pop(0)
+    x = Population(name=n["name"])
+    sex,race = n["sex"],n["race"]
+    if sex=="any":
+        sex = random.choice(["male","female"])
+    if race=="any":
+        sex = random.choice(["african american","white","latino","asian"])
+    x.sex = sex
+    x.race = race
+    x.age = random.randint(6,52)
+    return x
         
 class Symptom(Model):
     def defaults(self):
@@ -142,7 +176,6 @@ class Disease(Model):
         return s.symptoms
     def turn(self,context):
         context["disease"] = self
-        print "turn",id(self)
         self.spread(context["location"])
         self.age += 1
         if not self.get_stage():
@@ -185,7 +218,16 @@ diarrhea = Symptom(name="diarrhea",visibility=1,lethality=1,spread=1,spread_type
 stomach_pain = Symptom(name="stomach pain",visibility=2,lethality=1,spread=0)
 headache = Symptom(name="headache",visibility=2,lethality=0,spread=0)
 death = Symptom(name="death",visibility=10,lethality=10,spread=2,spread_types=['touch','air'])
-        
+
+badvirus = Disease(
+                stages=[
+                    Stage(length=1,spread=0,weakness=2,symptoms=[cough]),
+                    Stage(length=2,spread=1,weakness=1,symptoms=[cough,diarrhea,stomach_pain]),
+                    Stage(length=1,spread=2,weakness=1,symptoms=[death])
+                    ],
+                spread_methods=["air"],
+                name="H1N8M7G9"
+                )
 if __name__=="__main__":
     x = Disease(
                     stages=[

@@ -225,13 +225,7 @@ class Disease(Model):
         d.mutate()
         return d
     def mutate(self):
-        self.alter_stage_chance = 1                 #how likely to change a stage
-        self.add_symptom_chance = 1               #Add a symptom to a changing stage
-        self.remove_symptom_chance = 1          #Remove a symptom from a changing stage
-        self.change_symptom_chance = 1          #Change a symptom
-        self.add_spread_method_chance = 1       #How likely to add a new spread method
-        self.alter_spread_method_chance = 2     #How likely to change a spread method to something else
-        mutate = ["alts"*self.alter_stage_chance]+["addspr"*self.add_spread_method_chance]+["alterspr"*self.alter_spread_method_chance]+["nil"]*25
+        mutate = ["alts"]*self.alter_stage_chance+["addspr"]*self.add_spread_method_chance+["alterspr"]*self.alter_spread_method_chance+["nil"]*25
         mutate = random.choice(mutate)
         if mutate=="alts":
             sym = ["add"*self.add_symptom_chance]+["remove"*self.remove_symptom_chance]+["change"*self.change_symptom_chance]
@@ -263,8 +257,9 @@ def inhabit(location,population):
     location.people.append(population)
 def infect(disease,population):
     """After building a disease, inflict it on a population."""
-    population.illnesses.append(disease.copy())
-    population.immunities.add(disease.name)
+    if len(population.illnesses)<2:
+        population.illnesses.append(disease.copy())
+        #population.immunities.add(disease.name)
     
 cough = Symptom(name="cough",visibiliy=1,lethality=1,spread=2,spread_types=['air'])
 diarrhea = Symptom(name="diarrhea",visibility=1,lethality=1,spread=1,spread_types=['touch'])
@@ -278,6 +273,16 @@ badvirus = Disease(
                     Stage(length=2,spread=1,weakness=1,symptoms=[cough,diarrhea,stomach_pain]),
                     Stage(length=1,spread=2,weakness=1,symptoms=[death])
                     ],
+                spread_methods=["air"],
+                name="H1N8M7G9"
+                )
+nicevirus = Disease(
+                stages=[
+                    Stage(length=1,spread=0,weakness=2,symptoms=[cough]),
+                    Stage(length=2,spread=1,weakness=1,symptoms=[cough]),
+                    Stage(length=1,spread=2,weakness=1,symptoms=[cough])
+                    ],
+                alter_stage_chance=0,
                 spread_methods=["air"],
                 name="H1N8M7G9"
                 )

@@ -259,6 +259,10 @@ class MapWorld(World):
             zero = self.cities[0]
             p = random.choice(zero.people)
             infect(badvirus,p)
+        for i in range(10):
+            random.shuffle(self.cities)
+            p = random.choice(self.cities[0].people)
+            infect(nicevirus,p)
     def input(self,controller):
         if controller.mbdown:
             if self.messagepanel.over:

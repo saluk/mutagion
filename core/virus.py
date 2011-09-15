@@ -231,7 +231,7 @@ class Disease(Model):
         self.change_symptom_chance = 1          #Change a symptom
         self.add_spread_method_chance = 1       #How likely to add a new spread method
         self.alter_spread_method_chance = 2     #How likely to change a spread method to something else
-        mutate = ["alts"*self.alter_stage_chance]+["addspr"*self.add_spread_method_chance]+["alterspr"*self.alter_spread_method_chance]+["nil"*5]
+        mutate = ["alts"*self.alter_stage_chance]+["addspr"*self.add_spread_method_chance]+["alterspr"*self.alter_spread_method_chance]+["nil"]*25
         mutate = random.choice(mutate)
         if mutate=="alts":
             sym = ["add"*self.add_symptom_chance]+["remove"*self.remove_symptom_chance]+["change"*self.change_symptom_chance]
@@ -253,7 +253,10 @@ class Disease(Model):
             self.spread_methods.append(random.choice(["air","water","touch","sex","sigh","longair"]))
         elif mutate=="alterspr":
             random.shuffle(self.spread_methods)
-            self.spread_methods[0] = random.choice(["air","water","touch","sex","sigh","longair"])        
+            self.spread_methods[0] = random.choice(["air","water","touch","sex","sigh","longair"])
+        else:
+            return 0
+        return 1
         
 
 def inhabit(location,population):
@@ -278,6 +281,13 @@ badvirus = Disease(
                 spread_methods=["air"],
                 name="H1N8M7G9"
                 )
+
+mc = 0
+nv = badvirus
+for x in range(500):
+    nv = nv.copy()
+    mc += nv.mutate()
+print mc
 if __name__=="__main__":
     x = Disease(
                     stages=[

@@ -98,6 +98,15 @@ class CityPanel(Agent):
         py = 10
         if self.city:
             self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
+            py+=15
+            for p in self.city.people:
+                if p.symptoms():
+                    self.objects.append(
+                        Text(pos=[px,py]).set_text("%s - %s"%(
+                                p.name,
+                                ",".join([x.name for x in p.symptoms()])
+                            )))
+                    py += 10
         if self.turnon:
             if self.turnon<240:
                 d = 300
@@ -191,7 +200,7 @@ class MapWorld(World):
         self.load_cities()
         self.play_music()
         self.over = None
-        self.turn_time = 60
+        self.turn_time = 60#60*10
         self.next_turn = self.turn_time
         self.messages = []
         self.message_time = 60*2

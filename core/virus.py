@@ -82,7 +82,6 @@ class Population(Model):
     def turn(self,context):
         if self.dead:
             return
-        self.random_walk(context["location"])
         context["population"] = self
         for s in self.symptoms():
             if s.name == "death":
@@ -90,6 +89,8 @@ class Population(Model):
                 n+=1
                 context["dead"] = n
                 self.dead = True
+        if not self.dead:
+            self.random_walk(context["location"])
         for i in self.illnesses:
             i.turn(context)
     def random_walk(self,location):
@@ -220,7 +221,40 @@ class Disease(Model):
             if k in ["age","mutations"]:
                 continue
             a[k] = self.__dict__[k]
-        return Disease(**a)
+        d = Disease(**a)
+        d.mutate()
+        return d
+    def mutate(self):
+        self.alter_stage_chance = 1                 #how likely to change a stage
+        self.add_symptom_chance = 1               #Add a symptom to a changing stage
+        self.remove_symptom_chance = 1          #Remove a symptom from a changing stage
+        self.change_symptom_chance = 1          #Change a symptom
+        self.add_spread_method_chance = 1       #How likely to add a new spread method
+        self.alter_spread_method_chance = 2     #How likely to change a spread method to something else
+        mutate = ["alts"*self.alter_stage_chance]+["addspr"*self.add_spread_method_chance]+["alterspr"*self.alter_spread_method_chance]+["nil"*5]
+        mutate = random.choice(mutate)
+        if mutate=="alts":
+            sym = ["add"*self.add_symptom_chance]+["remove"*self.remove_symptom_chance]+["change"*self.change_symptom_chance]
+            sym = random.choice(sym)
+            s = random.choice(self.stages[:-1])
+            if sym=="add":
+                symptom = random.choice([cough,diarrhea,stomach_pain,headache])
+                s.symptoms.append(symptom)
+            elif sym=="remove":
+                if s.symptoms:
+                    l = list(s.symptoms)
+                    random.shuffle(l)
+                    s.symptoms.remove(l[0])
+            elif sym=="change":
+                if s.symptoms:
+                    i = random.randint(0,len(s.symptoms)-1)
+                    s.symptoms[i] = random.choice([cough,diarrhea,stomach_pain,headache])
+        elif mutate=="addspr":
+            self.spread_methods.append(random.choice(["air","water","touch","sex","sigh","longair"]))
+        elif mutate=="alterspr":
+            random.shuffle(self.spread_methods)
+            self.spread_methods[0] = random.choice(["air","water","touch","sex","sigh","longair"])        
+        
 
 def inhabit(location,population):
     location.people.append(population)

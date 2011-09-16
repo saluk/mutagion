@@ -337,6 +337,7 @@ class MapWorld(World):
     def turn(self):
         d = {"news":[],"world":self}
         [c.turn(d) for c in self.cities]
+        self.player.turn()
         for n in d["news"]:
             if n["type"] == "deaths":
                 msg = ("%(amount)s reported dead in %(cityname)s"%n,n)

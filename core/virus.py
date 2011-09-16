@@ -17,6 +17,10 @@ class Player(Model):
         self.income = 1000   #How much we will get
         self.max_budget = 1000   #Our budget can't exceed this
         self.influence = 1    #How much influence we have
+    def turn(self):
+        self.budget+=self.income
+        if self.budget>self.max_budget:
+            self.budget = self.max_budget
         
 class Location(Model):
     def defaults(self):

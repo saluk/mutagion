@@ -80,6 +80,8 @@ class Population(Model):
         self.dead = False
     def symptoms(self):
         symptoms = set()
+        if self.dead:
+            return symptoms
         for i in self.illnesses:
             for s in i.symptoms():
                 symptoms.add(s)

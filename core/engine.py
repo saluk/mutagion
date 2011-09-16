@@ -100,6 +100,9 @@ class Engine:
             if abs(self.offset[1])<self.reset:
                 self.offset[1]=random.random()*self.spread-self.spread/2.
         draw_segment(self.window,self.surface,self.offset,[1,1],40)
+        white = self.surface.convert()
+        white.fill([0,0,0])
+        draw_segment(self.window,white,[0,0],[1,1],random.randint(0,5))
         if showfps:
             self.window.blit(self.font.render(str(self.clock.get_fps()),1,[255,0,0]),[0,self.window.get_height()-12])
         pygame.display.flip()

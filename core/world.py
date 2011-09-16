@@ -126,9 +126,9 @@ class CityPanel(Agent):
             else:
                 btn("Isolate [$500]","isolate","art/nocar.png")
                 py+=20
-            btn("Hire researcher [$50]","researcher")
+            btn("Hire researcher [$50] (%s)"%len([x for x in self.city.people if x.job=="researcher"]),"researcher","art/researcher.png")
             py+=20
-            btn("Hire doctor [$200]","doctor")
+            btn("Hire doctor [$200] (%s)"%len([x for x in self.city.people if x.job=="doctor"]),"doctor","art/doctor.png")
             py+=20
         if self.turnon:
             if self.turnon<240:

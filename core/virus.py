@@ -123,7 +123,13 @@ class Doctor(Population):
     def random_walk(self,location):
         pass
         
-Doctor()
+class Researcher(Population):
+    def defaults(self):
+        Population.defaults(self)
+        self.job = "researcher"
+        self.name = "Researcher"
+    def random_walk(self,location):
+        pass
 
 names = []
 f = open("dat/people.txt")

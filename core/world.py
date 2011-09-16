@@ -43,7 +43,7 @@ class CityDrawer(Agent):
             return off(p,[offx,offy])
         self.world.over = None
         for c in self.world.cities:
-            for near in c.travelmap:
+            for near in c.get_travelmap():
                 pygame.draw.line(engine.surface,[50,150,50],of(c.pos),of(near[1].pos))
         for c in self.world.cities:
             color = [0,255,0]
@@ -96,6 +96,9 @@ class CityPanel(Agent):
         self.objects = []
         px = 10
         py = 10
+        self.over = None
+        mx,my = world.engine.get_mouse_pos()
+        mx-=self.pos[0]
         if self.city:
             self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
             py+=15
@@ -107,6 +110,18 @@ class CityPanel(Agent):
                                 ",".join([x.name for x in p.symptoms()])
                             )))
                     py += 10
+            py = 210
+            def btn(text,action,icon=None):
+                if mx>=px and mx<=px+200 and my>=py and my<=py+20:
+                    self.over = getattr(self,action)
+                    self.objects.append(Agent("art/select.png",pos=[px,py]))
+                if icon:
+                    self.objects.append(Agent("art/nocar.png",pos=[px,py]))
+                self.objects.append(Text(pos=[px+32,py]).set_text(text))
+            if self.city.isolated:
+                btn("Connect [$100]","connect","art/car.png")
+            else:
+                btn("Isolate [$500]","isolate","art/nocar.png")
         if self.turnon:
             if self.turnon<240:
                 d = 300
@@ -130,6 +145,10 @@ class CityPanel(Agent):
             o.pos[1]+=self.pos[1]
             o.draw(engine)
             o.pos = p
+    def isolate(self):
+        self.city.isolated = True
+    def connect(self):
+        self.city.isolated = False
 
 class Messages(Agent):
     def init(self):
@@ -269,6 +288,8 @@ class MapWorld(World):
                 self.panel.turnon = self.messagepanel.over.data[1]["city"].pos[0]
                 self.panel.pos[0] = -200
                 self.panel.city = self.messagepanel.over.data[1]["city"]
+            elif self.panel.over:
+                self.panel.over()
             elif self.over:
                 self.panel.turnon = self.over.pos[0]
                 self.panel.pos[0] = -200

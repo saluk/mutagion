@@ -26,6 +26,7 @@ class Location(Model):
         self.population = 1000
         self.area = 1000
         self.density = 1000
+        self.isolated = False
     def turn(self,context):
         anydead = self.get_infected()
         context["location"] = self
@@ -51,6 +52,10 @@ class Location(Model):
                 continue
             self.travelmap.append((d,c))
         self.travelmap.sort(key=lambda c:c[0])
+    def get_travelmap(self):
+        if self.isolated:
+            return []
+        return [x for x in self.travelmap if not x[1].isolated]
     def get_infected(self):
         """How infected are we?"""
         return len([x for x in self.people if x.dead])
@@ -97,7 +102,10 @@ class Population(Model):
         self.last_travel += 1
         if self.last_travel>=self.mobility:
             self.last_travel = 0
-            l = random.choice(location.travelmap)
+            options = location.get_travelmap()
+            if not options:
+                return
+            l = random.choice(options)
             l[1].add(self)
             location.remove(self)
     def remove_disease(self,d):

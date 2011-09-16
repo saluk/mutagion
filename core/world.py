@@ -116,7 +116,7 @@ class CityPanel(Agent):
                     self.over = getattr(self,action)
                     self.objects.append(Agent("art/select.png",pos=[px,py]))
                 if icon:
-                    self.objects.append(Agent("art/nocar.png",pos=[px,py]))
+                    self.objects.append(Agent(icon,pos=[px,py]))
                 self.objects.append(Text(pos=[px+32,py]).set_text(text))
             if self.city.isolated:
                 btn("Connect [$100]","connect","art/car.png")

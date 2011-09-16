@@ -145,10 +145,14 @@ class CityPanel(Agent):
             o.pos[1]+=self.pos[1]
             o.draw(engine)
             o.pos = p
-    def isolate(self):
-        self.city.isolated = True
-    def connect(self):
-        self.city.isolated = False
+    def isolate(self,world):
+        if world.player.budget>=500:
+            world.player.budget-=500
+            self.city.isolated = True
+    def connect(self,world):
+        if world.player.budget>=100:
+            world.player.budget-=100
+            self.city.isolated = False
 
 class Messages(Agent):
     def init(self):
@@ -289,7 +293,7 @@ class MapWorld(World):
                 self.panel.pos[0] = -200
                 self.panel.city = self.messagepanel.over.data[1]["city"]
             elif self.panel.over:
-                self.panel.over()
+                self.panel.over(self)
             elif self.over:
                 self.panel.turnon = self.over.pos[0]
                 self.panel.pos[0] = -200

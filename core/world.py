@@ -99,6 +99,8 @@ class CityPanel(Agent):
         self.over = None
         mx,my = world.engine.get_mouse_pos()
         mx-=self.pos[0]
+        if mx>=0 and mx<=200 and my>=0 and my<=400:
+            self.over = self.update
         if self.city:
             self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
             py+=15
@@ -145,13 +147,17 @@ class CityPanel(Agent):
             o.pos[1]+=self.pos[1]
             o.draw(engine)
             o.pos = p
+    def action(self,world,money=None,influence=None):
+        if world.player.budget>=money:
+            world.player.budget-=money
+            return True
+        else:
+            world.engine.offset = [random.random()*0.2-0.1,random.random()*0.2-0.1]
     def isolate(self,world):
-        if world.player.budget>=500:
-            world.player.budget-=500
+        if self.action(world,500,0):
             self.city.isolated = True
     def connect(self,world):
-        if world.player.budget>=100:
-            world.player.budget-=100
+        if self.action(world,100,0):
             self.city.isolated = False
 
 class Messages(Agent):

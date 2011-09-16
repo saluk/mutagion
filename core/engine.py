@@ -36,7 +36,7 @@ class Engine:
         self.spread = .01
         self.spread2 = 1.0
         self.offset = [0,0]
-        self.reset = .01
+        self.reset = .02
     def start(self):
         """Separate from __init__ in case we want to make the object before making the screen"""
         pygame.init()

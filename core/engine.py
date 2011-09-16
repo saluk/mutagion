@@ -34,6 +34,9 @@ class Engine:
         self.world = None   #Change what world is set to to change between scenes or modes
         self.next_tick = 0.0
         self.spread = .01
+        self.spread2 = 1.0
+        self.offset = [0,0]
+        self.reset = .01
     def start(self):
         """Separate from __init__ in case we want to make the object before making the screen"""
         pygame.init()
@@ -80,7 +83,23 @@ class Engine:
                 surf.set_alpha(alpha)
             dest.blit(surf,rp)
         draw_segment(self.window,self.surface,[0,0],[1,1])
-        draw_segment(self.window,self.surface,[random.random()*self.spread-self.spread/2.,random.random()*self.spread-self.spread/2.],[1,1],40)
+        if random.randint(0,200)==-1:
+            self.offset[0]=random.random()*self.spread2-self.spread2/2.
+            self.offset[1]=random.random()*self.spread2-self.spread2/2.
+        else:
+            if self.offset[0]>0:
+                self.offset[0]-=self.reset
+            elif self.offset[0]<0:
+                self.offset[0]+=self.reset
+            if abs(self.offset[0])<self.reset:
+                self.offset[0]=random.random()*self.spread-self.spread/2.
+            if self.offset[1]>0:
+                self.offset[1]-=self.reset
+            elif self.offset[1]<0:
+                self.offset[1]+=self.reset
+            if abs(self.offset[1])<self.reset:
+                self.offset[1]=random.random()*self.spread-self.spread/2.
+        draw_segment(self.window,self.surface,self.offset,[1,1],40)
         if showfps:
             self.window.blit(self.font.render(str(self.clock.get_fps()),1,[255,0,0]),[0,self.window.get_height()-12])
         pygame.display.flip()

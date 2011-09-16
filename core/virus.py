@@ -72,6 +72,7 @@ class Population(Model):
         self.age = 18   #average age
         self.mobility = 2  #how many turns between travelling
         self.trust = 0  #How likely they are to trust the media
+        self.job = None
         
         self.last_travel = 0
         self.travel_history = []  #first entry is their home
@@ -113,6 +114,16 @@ class Population(Model):
     def remove_disease(self,d):
         if d in self.illnesses:
             self.illnesses.remove(d)
+            
+class Doctor(Population):
+    def defaults(self):
+        Population.defaults(self)
+        self.job = "doctor"
+        self.name = "Doctor"
+    def random_walk(self,location):
+        pass
+        
+Doctor()
 
 names = []
 f = open("dat/people.txt")

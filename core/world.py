@@ -50,7 +50,7 @@ class CityDrawer(Agent):
             if c.get_infected():
                 color = [255,0,0]
             pygame.draw.line(engine.surface,[0,0,0],of(c.pos),of([c.pos[0],c.pos[1]+4]))
-            n = engine.font.render("%s"%len([pp for pp in c.people if not pp.dead]),1,[0,0,0])
+            n = engine.font.render("%s"%len([pp for pp in c.people if not pp.dead and pp.job=="doctor"]),1,[0,0,0])
             engine.surface.blit(n,of([c.pos[0]-n.get_width()//2,c.pos[1]+4]))
             pygame.draw.circle(engine.surface,color,of(c.pos),3)
             x,y = engine.get_mouse_pos()
@@ -122,8 +122,12 @@ class CityPanel(Agent):
                 self.objects.append(Text(pos=[px+32,py]).set_text(text))
             if self.city.isolated:
                 btn("Connect [$100]","connect","art/car.png")
+                py+=20
             else:
                 btn("Isolate [$500]","isolate","art/nocar.png")
+                py+=20
+            btn("Hire doctor [$100]","doctor")
+            py+=20
         if self.turnon:
             if self.turnon<240:
                 d = 300
@@ -159,6 +163,9 @@ class CityPanel(Agent):
     def connect(self,world):
         if self.action(world,100,0):
             self.city.isolated = False
+    def doctor(self,world):
+        if self.action(world,100,0):
+            self.city.add(Doctor())
 
 class Messages(Agent):
     def init(self):

@@ -124,7 +124,7 @@ class CityPanel(Agent):
                 btn("Connect [$100]","connect","art/car.png")
                 py+=20
             else:
-                btn("Isolate [$500]","isolate","art/nocar.png")
+                btn("Isolate [$500]","isolate","art/car.png")
                 py+=20
             btn("Hire researcher [$50] (%s)"%len([x for x in self.city.people if x.job=="researcher"]),"researcher","art/researcher.png")
             py+=20

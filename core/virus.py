@@ -79,6 +79,13 @@ class Population(Model):
         self.illnesses = []
         self.immunities = set()
         self.dead = False
+    def travel_factor(self):
+        """Calculate whether we are fit to travel or not"""
+        if self.dead:
+            return 0
+        tf = 10
+        for s in self.symptoms():
+            tf -= s.visibility*s.severity
     def symptoms(self):
         symptoms = set()
         if self.dead:
@@ -97,11 +104,13 @@ class Population(Model):
                 n+=1
                 context["dead"] = n
                 self.dead = True
-        if not self.dead:
-            self.random_walk(context["location"])
+        self.random_walk(context["location"])
         for i in self.illnesses:
             i.turn(context)
     def random_walk(self,location):
+        tf = self.travel_factor()
+        if tf<5:
+            return
         self.last_travel += 1
         if self.last_travel>=self.mobility:
             self.last_travel = 0
@@ -161,7 +170,7 @@ class Symptom(Model):
     def defaults(self):
         self.name = "cough"
         self.visibility = 1  #How likely to detect/how likely they are in the hospital
-        self.lethality = 0  #How likely for symptom to kill someone
+        self.severity = 1  #How much discomfort caused, highest levels can kill
         self.spread = 2   #Modifies spread
         self.spread_types = ["air"]   #Spread modifier only if type matches
     def __repr__(self):
@@ -288,11 +297,11 @@ def infect(disease,population):
         population.illnesses.append(disease.copy())
         #population.immunities.add(disease.name)
     
-cough = Symptom(name="cough",visibiliy=1,lethality=1,spread=2,spread_types=['air'])
-diarrhea = Symptom(name="diarrhea",visibility=1,lethality=1,spread=1,spread_types=['touch'])
-stomach_pain = Symptom(name="stomach pain",visibility=2,lethality=1,spread=0)
-headache = Symptom(name="headache",visibility=2,lethality=0,spread=0)
-death = Symptom(name="death",visibility=10,lethality=10,spread=2,spread_types=['touch','air'])
+cough = Symptom(name="cough",visibiliy=1,severity=3,spread=2,spread_types=['air'])
+diarrhea = Symptom(name="diarrhea",visibility=1,severity=4,spread=1,spread_types=['touch'])
+stomach_pain = Symptom(name="stomach pain",visibility=5,severity=1,spread=0)
+headache = Symptom(name="headache",visibility=2,severity=4,spread=0)
+death = Symptom(name="death",visibility=10,severity=10,spread=2,spread_types=['touch','air'])
 
 badvirus = Disease(
                 stages=[

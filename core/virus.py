@@ -14,7 +14,7 @@ class Model(object):
 class Player(Model):
     def defaults(self):
         self.budget = 1000   #Current budget
-        self.income = 1000   #How much we will get
+        self.income = 100   #How much we will get
         self.max_budget = 1000   #Our budget can't exceed this
         self.influence = 1    #How much influence we have
         self.tonics = 0

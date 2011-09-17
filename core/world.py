@@ -160,11 +160,12 @@ class CityPanel(Agent):
             o.draw(engine)
             o.pos = p
     def action(self,world,money=None,influence=None):
-        if world.player.budget>=money:
-            world.player.budget-=money
-            return True
-        else:
-            world.engine.offset = [random.random()*0.2-0.1,random.random()*0.2-0.1]
+        if money:
+            if world.player.budget>=money:
+                world.player.budget-=money
+                return True
+            else:
+                world.engine.offset = [random.random()*0.2-0.1,random.random()*0.2-0.1]
     def isolate(self,world):
         if self.action(world,500,0):
             self.city.isolated = True

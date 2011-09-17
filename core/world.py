@@ -125,7 +125,7 @@ class CityPanel(Agent):
                     self.objects.append(Agent("art/select.png",pos=[px,py]))
                 if icon:
                     self.objects.append(Agent(icon,pos=[px,py]))
-                self.objects.append(Text(pos=[px+32,py]).set_text(text))
+                self.objects.append(Text(pos=[px+20,py]).set_text(text))
             if self.city.isolated:
                 btn("Connect [$100]","connect","art/car.png")
                 py+=20
@@ -136,6 +136,10 @@ class CityPanel(Agent):
             py+=20
             btn("Hire doctor [$200] (%s)"%len([x for x in self.city.people if x.job=="doctor"]),"doctor","art/doctor.png")
             py+=20
+            if self.city.advertising:
+                btn("(advertising bought)","update")
+            else:
+                btn("buy advertising [$1000]","influence")
         if self.turnon:
             d = 0
             if self.pos[0]>d:
@@ -173,6 +177,9 @@ class CityPanel(Agent):
     def researcher(self,world):
         if self.action(world,50,0):
             self.city.add(Researcher())
+    def influence(self,world):
+        world.player.influence += 1
+        self.city.advertising += 1
 
 class Messages(Agent):
     def init(self):

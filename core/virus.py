@@ -31,6 +31,7 @@ class Location(Model):
         self.area = 1000
         self.density = 1000
         self.isolated = False
+        self.advertising = 0
     def turn(self,context):
         anydead = self.get_infected()
         context["location"] = self

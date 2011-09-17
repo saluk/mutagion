@@ -1,24 +1,23 @@
+Mutagion - a pyweek 13 entry
+By - saluk
+Background - a new megavirus is about to ravage the USA
+Objective - save as much of the population as possible
+
+Controls - Click on cities to see info about them.
+The city panel will list people who are reporting symptoms,
+as well as showing a list of actions to take in the city.
+
+Find who really has the virus and not just a common cold,
+and fight back! Use advertising to gain influence and shut
+down well connected cities, hire researchers to discover
+cures for the virus, as it will keep mutating, and hire
+doctors to administer the cures.
+
+When the virus has either killed its food supply, or been
+wiped out, you will be presented with a score.
+
+How much of the population can you save?
+
+
 music:
-    weird and alien, with some drama
-    
-    menu
-        eastern reflections
-    in game
-        glow - http://ccmixter.org/files/gurdonark/21585
-        outsiders - http://ccmixter.org/files/gurdonark/18686
-        eastern reflections
-        into the silent land - http://ccmixter.org/files/gurdonark/15050
-        emergence sci fi - http://ccmixter.org/files/gurdonark/30169
-        great kiskadee - http://ccmixter.org/files/gurdonark/29153
-        tingle tongue - http://ccmixter.org/files/gurdonark/27407
-        dawdle - http://ccmixter.org/files/gurdonark/12868
-        ominous hope - http://ccmixter.org/files/gurdonark/14580
-    a mutation appears!
-        warrior
-    strain eradicated
-    game lost
-        
-    game won
-        innocence http://ccmixter.org/files/gurdonark/14784
-    
-gulf - http://ccmixter.org/files/gurdonark/26774
+  glow - http://ccmixter.org/files/gurdonark/21585

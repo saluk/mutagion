@@ -192,6 +192,7 @@ def gen_random_population():
     x.race = race
     x.age = random.randint(6,52)
     x.mobility = random.randint(2,10)
+    x.max_travel_distance = 10-x.mobility//2
     return x
         
 class Symptom(Model):
@@ -344,7 +345,8 @@ death = Symptom(name="death",visibility=10,severity=10,spread=2,spread_types=['t
 
 badvirus = Disease(
                 stages=[
-                    Stage(length=1,spread=0,weakness=2,symptoms=[cough]),
+                    Stage(length=2,spread=0,weakness=2,symptoms=[cough]),
+                    Stage(length=4,spread=1,weakness=2,symptoms=[cough]),
                     Stage(length=2,spread=1,weakness=1,symptoms=[cough,diarrhea,stomach_pain]),
                     Stage(length=1,spread=2,weakness=1,symptoms=[death])
                     ],

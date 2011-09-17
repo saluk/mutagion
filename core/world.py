@@ -135,7 +135,7 @@ class CityPanel(Agent):
             btn("Hire doctor [$200] (%s)"%len([x for x in self.city.people if x.job=="doctor"]),"doctor","art/doctor.png")
             py+=20
         if self.turnon:
-            if self.turnon<240:
+            if 0:#self.turnon<240:
                 d = 300
                 if self.pos[0]<d:
                     self.pos[0]=640

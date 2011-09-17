@@ -255,7 +255,7 @@ class MapWorld(World):
     def load_cities(self):
         self.cities = []
         f = open("dat/cities.txt")
-        for l in f.read().split("\n"):
+        for l in f.read().replace("\r\n","\n").split("\n"):
             if l.endswith("*"):
                 stuff = [x.strip() for x in l.split("  ") if x.strip()]
                 code,lat,long,city = stuff
@@ -272,7 +272,7 @@ class MapWorld(World):
                 self.cities.append(Location(name=city+", "+state,lat=lat,long=long,pos=[px,py]))
         f = open("dat/population.txt")
         pops = {}
-        for l in f.read().split("\n"):
+        for l in f.read().replace("\r\n","\n").split("\n"):
             stuff = l.split("\t")
             cn = stuff[1]
             pop = float(stuff[3].replace(",",""))

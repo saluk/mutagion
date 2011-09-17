@@ -147,7 +147,7 @@ class Researcher(Population):
 names = []
 f = open("dat/people.txt")
 mode = None
-for l in f.read().split("\n"):
+for l in f.read().replace("\r\n","\n").split("\n"):
     if l.startswith("name/"):
         spl = l.split("/")
         mode = spl[0]

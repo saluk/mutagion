@@ -34,6 +34,8 @@ class World(object):
     def input(self,controller):
         """As controller gets functions to check the state of things, input
         can be put here"""
+        
+        
 def off(pos,offamt):
     return [pos[0]+offamt[0],pos[1]+offamt[1]]
 class CityDrawer(Agent):
@@ -213,9 +215,13 @@ class PlayerPanel(Agent):
             self.objects.append(Agent(art="art/dollar.png",pos=[x,y]))
             self.dollar_text = Text(pos=[x+20,y])
             self.objects.append(self.dollar_text)
-            y+=10
+            y+=20
+            self.influence_text = Text(pos=[x+20,y])
+            self.objects.append(self.influence_text)
+            y+=20
         if self.player:
             self.dollar_text.set_text("%(budget)s / +%(income)s"%self.player.__dict__)
+            self.influence_text.set_text("Influence: %(influence)s"%self.player.__dict__)
     def draw(self,engine):
         engine.surface.blit(self.bg,self.pos)
         [o.draw(engine) for o in self.objects]

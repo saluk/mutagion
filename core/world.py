@@ -108,14 +108,10 @@ class CityPanel(Agent):
             self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
             py+=15
             for p in self.city.people:
-                if 1:#p.symptoms():
+                if p.symptoms():
                     self.objects.append(
-                        Text(pos=[px,py]).set_text("%s - mobile%s dead?%s homesick %s, %s, %s"%(
+                        Text(pos=[px,py]).set_text("%s - %s"%(
                                 p.name,
-                                p.mobility,
-                                p.dead,
-                                p.homesick,
-                                p.travel_factor(),
                                 ",".join([x.name for x in p.symptoms()])
                             )))
                     py += 10
@@ -143,7 +139,7 @@ class CityPanel(Agent):
             if self.city.advertising:
                 btn("(advertising bought)","update")
             else:
-                btn("buy advertising [$1000]","influence")
+                btn("buy advertising [$600]","influence")
         if self.turnon:
             d = 0
             if self.pos[0]>d:
@@ -198,7 +194,7 @@ class CityPanel(Agent):
             r.player = world.player
             inhabit(self.city,r)
     def influence(self,world):
-        if self.action(world,1000,0):
+        if self.action(world,600,0):
             world.player.influence += 1
             self.city.advertising += 1
 
@@ -212,7 +208,7 @@ class Messages(Agent):
     def update(self,world):
         self.over = None
         for o in self.objects[:]:
-            o.pos[0]-=5
+            o.pos[0]-=2
             x,y = world.engine.get_mouse_pos()
             if x>=o.pos[0] and x<=o.rect().right and y>=o.pos[1] and y<=o.rect().bottom:
                 self.over = o
@@ -225,9 +221,9 @@ class Messages(Agent):
             pygame.draw.line(engine.surface,[255,255,255],self.over.pos,self.over.data[1]["city"].pos)
     def right(self):
         if not self.objects:
-            return 650
+            return 660
         last = self.objects[-1]
-        return max(last.rect().right+10,650)
+        return last.rect().right+10
         
 class PlayerPanel(Agent):
     def init(self):
@@ -253,13 +249,12 @@ class PlayerPanel(Agent):
             y+=20
             self.objects.append(Text(pos=[x,y]).set_text("Virus study level:"))
             y+=20
-            for v in self.player.viruses:
-                self.objects.append(Text(pos=[x+20,y]).set_text("%s: %s"%(v,self.player.viruses[v])))
-                y+=20
+            self.objects.append(Text(pos=[x+20,y]).set_text("%s"%(len(self.player.viruses))))
+            y+=20
         if self.player:
             self.dollar_text.set_text("%(budget)s/%(max_budget)s +%(income)s"%self.player.__dict__)
             self.influence_text.set_text("Influence: %(influence)s"%self.player.__dict__)
-            self.score_text.set_text("Score: %(score)s%%"%self.player.__dict__)
+            self.score_text.set_text("Score: %(score).2f%%"%self.player.__dict__)
     def draw(self,engine):
         engine.surface.blit(self.bg,self.pos)
         [o.draw(engine) for o in self.objects]
@@ -287,7 +282,7 @@ class MapWorld(World):
         self.load_cities()
         self.play_music()
         self.over = None
-        self.turn_time = 60#60*10
+        self.turn_time = 60*3
         self.next_turn = self.turn_time
         self.messages = []
         self.message_time = 60*2
@@ -415,9 +410,11 @@ class Losing(World):
         if not hasattr(self,"fade"):
             self.fade = 0
             self.fadesurf = pygame.Surface([640,480])
+            self.end = 0
         if self.fade<255:
             self.fade += 3
         else:
+            self.end += 1
             sc = self.oldworld.player.score
             grade = "F"
             if sc>=60:
@@ -430,6 +427,7 @@ class Losing(World):
                 grade = "A"
             self.objects = [Text(pos=[200,180]).set_text("The virus has been wiped out.")]
             self.objects += [Text(pos=[200,220]).set_text("Percentage remaining: %.2f%% - %s"%(sc,grade))]
+            self.objects += [Text(pos=[200,280]).set_text("Click to retry")]
         super(Losing,self).update()
     def draw(self):
         if hasattr(self,"fadesurf"):
@@ -437,6 +435,11 @@ class Losing(World):
             self.fadesurf.set_alpha(int(self.fade))
             self.engine.surface.blit(self.fadesurf,[0,0])
             super(Losing,self).draw()
+    def input(self,controller):
+        if hasattr(self,"end") and self.end>100:
+            if controller.mbdown:
+                self.engine.world = MapWorld(self.engine)
+                self.engine.world.start()
         
 def make_world(engine):
     """This makes the starting world"""

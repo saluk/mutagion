@@ -170,7 +170,6 @@ class Doctor(Population):
         super(Doctor,self).turn(context)
     def dohealing(self):
         if not self.location:
-            print "no location?"
             return
         people = self.location.people[:]
         def score(p):
@@ -196,8 +195,8 @@ class Doctor(Population):
         il = il[-1]
         if score(il)==0:
             return
-        il.age -= self.player.viruses[il.name]
-        if il.age==0:
+        il.age -= self.player.viruses[il.name]*2
+        if il.age<=0:
             p.remove_disease(il)
         
 class Researcher(Population):

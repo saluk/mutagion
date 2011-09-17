@@ -258,8 +258,8 @@ class MapWorld(World):
         pygame.mixer.music.load("music/gurdonark_-_Glow.ogg")
         pygame.mixer.music.play(-1)
     def start(self,num_viruses=1,seed=int(time.time()*100)):
-        seed = 131603110005
-        seed = "i like cats"
+        #~ seed = 131603110005
+        #~ seed = "i like cats"
         if seed:
             random.seed(seed)
         self.offset = [0,0]

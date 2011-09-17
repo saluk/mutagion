@@ -5,3 +5,4 @@ loghistory.txt
 logfile.txt
 build
 *.DS_Store
+mutagion_*.zip

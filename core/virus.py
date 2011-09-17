@@ -187,6 +187,7 @@ def gen_random_population():
     x.sex = sex
     x.race = race
     x.age = random.randint(6,52)
+    x.mobility = random.randint(2,10)
     return x
         
 class Symptom(Model):

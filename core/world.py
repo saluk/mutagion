@@ -13,6 +13,7 @@ class World(object):
     def __init__(self,engine):
         self.engine = engine
         self.objects = []
+        self.sprites = []
         self.start()
     def add(self,o):
         """Add an object to the scene"""
@@ -276,7 +277,7 @@ class MapWorld(World):
         self.load_cities()
         self.play_music()
         self.over = None
-        self.turn_time = 60#60*10
+        self.turn_time = 1#60#60*10
         self.next_turn = self.turn_time
         self.messages = []
         self.message_time = 60*2
@@ -382,16 +383,51 @@ class MapWorld(World):
         [c.turn(d) for c in self.cities]
         self.player.turn()
         pop = 0
+        virusleft = 0
         for c in self.cities:
             for p in c.people:
                 if not p.dead:
                     pop += p.size
+                    for il in p.illnesses:
+                        if il.type=="deadly":
+                            virusleft += 1
         print pop,self.total_pop
         self.player.score = pop/float(self.total_pop)*100
         for n in d["news"]:
             if n["type"] == "deaths":
                 msg = ("%(amount)s reported dead in %(cityname)s"%n,n)
             self.messages.append(msg)
+        if not virusleft:
+            self.engine.world = Losing(self.engine)
+            self.engine.world.oldworld = self
+            
+class Losing(World):
+    def update(self):
+        if not hasattr(self,"fade"):
+            self.fade = 0
+            self.fadesurf = pygame.Surface([640,480])
+        if self.fade<255:
+            self.fade += 3
+        else:
+            sc = self.oldworld.player.score
+            grade = "F"
+            if sc>=60:
+                grade = "D"
+            if sc>=70:
+                grade = "C"
+            if sc>=80:
+                grade = "B"
+            if sc>=90:
+                grade = "A"
+            self.objects = [Text(pos=[200,180]).set_text("The virus has been wiped out.")]
+            self.objects += [Text(pos=[200,220]).set_text("Percentage remaining: %.2f%% - %s"%(sc,grade))]
+        super(Losing,self).update()
+    def draw(self):
+        if hasattr(self,"fadesurf"):
+            self.oldworld.draw()
+            self.fadesurf.set_alpha(int(self.fade))
+            self.engine.surface.blit(self.fadesurf,[0,0])
+            super(Losing,self).draw()
         
 def make_world(engine):
     """This makes the starting world"""

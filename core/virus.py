@@ -22,6 +22,7 @@ class Player(Model):
         self.viruses = 0
         self.score = 100
         self.score_bonus = 0
+        self.viruses = {}
     def turn(self):
         if self.score_bonus == 0 and self.score<60:
             self.influence += 4
@@ -251,6 +252,7 @@ class Disease(Model):
         self.alter_spread_method_chance = 2     #How likely to change a spread method to something else
         
         self.name = "H1N16"                         #Name given to disease once discovered, used as seed for random?
+        self.type = "deadly"
     def get_stage(self):
         """Gets the stage we are currently on"""
         c = 0
@@ -304,7 +306,7 @@ class Disease(Model):
         if random.randint(0,100)<self.mutate_chance:
             self.name = random.randint(0,500000)
             while self.name in self.names:
-                self.name = random.randint(0,500000)
+                self.name = "H%s"%random.randint(0,500000)
             self.names.append(self.name)
             mutate = ["alts"]*self.alter_stage_chance+["addspr"]*self.add_spread_method_chance+["alterspr"]*self.alter_spread_method_chance+["nil"]*10
             mutate = random.choice(mutate)
@@ -356,7 +358,8 @@ badvirus = Disease(
                     Stage(length=1,spread=2,weakness=1,symptoms=[death])
                     ],
                 spread_methods=["air"],
-                name="H1N8M7G9"
+                name="H1N8M7G9",
+                type="deadly"
                 )
 nicevirus = Disease(
                 stages=[
@@ -366,7 +369,8 @@ nicevirus = Disease(
                     ],
                 alter_stage_chance=0,
                 spread_methods=["air"],
-                name="H2N8M7G8"
+                name="H2N8M7G8",
+                type="benign"
                 )
 
 #~ mc = 0

@@ -227,7 +227,7 @@ class Messages(Agent):
 class PlayerPanel(Agent):
     def init(self):
         self.objects = []
-        self.bg = pygame.Surface([140,200])
+        self.bg = pygame.Surface([140,240])
         self.bg.fill([0,0,0])
         self.bg.set_alpha(150)
         self.player = None
@@ -283,7 +283,7 @@ class MapWorld(World):
         self.next_message = 0
         self.messagepanel = Messages()
         self.add(self.messagepanel)
-        self.playerpanel = PlayerPanel(pos=[510,240])
+        self.playerpanel = PlayerPanel(pos=[510,220])
         self.add(self.playerpanel)
         self.player = Player()
         self.playerpanel.player = self.player

@@ -17,6 +17,9 @@ class Player(Model):
         self.income = 1000   #How much we will get
         self.max_budget = 1000   #Our budget can't exceed this
         self.influence = 1    #How much influence we have
+        self.tonics = 0
+        self.cures = 0
+        self.viruses = 0
     def turn(self):
         self.budget+=self.income
         if self.budget>self.max_budget:
@@ -32,12 +35,13 @@ class Location(Model):
         self.density = 1000
         self.isolated = False
         self.advertising = 0
+        self.travelmap = []
     def turn(self,context):
         anydead = self.get_infected()
         context["location"] = self
         for p in self.people:
             p.turn(context)
-        if anydead != self.get_infected():
+        if anydead != self.get_infected() and "news"  in context:
             context["news"].append({"type":"deaths","amount":self.get_infected_count(),"cityname":self.name,"city":self})
     def add(self,p):
         self.people.append(p)
@@ -133,7 +137,6 @@ class Population(Model):
             self.last_travel = 0
             options = location.get_travelmap()
             if not options:
-                print "cant travel"
                 return
             l = random.choice(options)
             self.moveto(l[1])
@@ -321,7 +324,7 @@ def infect(disease,population):
     """After building a disease, inflict it on a population."""
     if len(population.illnesses)<2:
         population.illnesses.append(disease.copy())
-        #population.immunities.add(disease.name)
+        population.immunities.add(disease.name)
     
 cough = Symptom(name="cough",visibiliy=1,severity=3,spread=2,spread_types=['air'])
 diarrhea = Symptom(name="diarrhea",visibility=1,severity=4,spread=1,spread_types=['touch'])
@@ -346,15 +349,15 @@ nicevirus = Disease(
                     ],
                 alter_stage_chance=0,
                 spread_methods=["air"],
-                name="H1N8M7G9"
+                name="H1N8M7G8"
                 )
 
-mc = 0
-nv = badvirus
-for x in range(500):
-    nv = nv.copy()
-    mc += nv.mutate()
-print mc
+#~ mc = 0
+#~ nv = badvirus
+#~ for x in range(500):
+    #~ nv = nv.copy()
+    #~ mc += nv.mutate()
+#~ print mc
 if __name__=="__main__":
     x = Disease(
                     stages=[

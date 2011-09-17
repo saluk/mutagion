@@ -242,9 +242,13 @@ class PlayerPanel(Agent):
             self.influence_text = Text(pos=[x+20,y])
             self.objects.append(self.influence_text)
             y+=20
+            self.score_text = Text(pos=[x+20,y])
+            self.objects.append(self.score_text)
+            y+=20
         if self.player:
             self.dollar_text.set_text("%(budget)s / +%(income)s"%self.player.__dict__)
             self.influence_text.set_text("Influence: %(influence)s"%self.player.__dict__)
+            self.score_text.set_text("Score: %(score)s%%"%self.player.__dict__)
     def draw(self,engine):
         engine.surface.blit(self.bg,self.pos)
         [o.draw(engine) for o in self.objects]
@@ -310,6 +314,7 @@ class MapWorld(World):
             area = float(stuff[4].replace(",",""))
             dens = float(stuff[5].replace(",",""))
             pops[cn.lower().strip()] = {"population":pop,"area":area,"density":dens}
+        self.total_pop = 0
         for c in self.cities:
             c.__dict__.update(pops[c.name.lower().split(",")[0]])
             c.travel_table(self.cities)
@@ -322,10 +327,15 @@ class MapWorld(World):
                 pop -= p.size
                 if pop<0:
                     p.size+=pop
+                    pop=0
                 p.size = int(p.size)
+                if p.size<0:
+                    p.size = 100
                 inhabit(c,p)
-            if pop:
+                self.total_pop+=p.size
+            if pop>0:
                 random.choice(c.people).size+=int(pop)
+                self.total_pop+=int(pop)
         for i in range(self.num_viruses):
             random.shuffle(self.cities)
             zero = self.cities[0]
@@ -371,6 +381,13 @@ class MapWorld(World):
         d = {"news":[],"world":self}
         [c.turn(d) for c in self.cities]
         self.player.turn()
+        pop = 0
+        for c in self.cities:
+            for p in c.people:
+                if not p.dead:
+                    pop += p.size
+        print pop,self.total_pop
+        self.player.score = pop/float(self.total_pop)*100
         for n in d["news"]:
             if n["type"] == "deaths":
                 msg = ("%(amount)s reported dead in %(cityname)s"%n,n)

@@ -20,7 +20,12 @@ class Player(Model):
         self.tonics = 0
         self.cures = 0
         self.viruses = 0
+        self.score = 100
+        self.score_bonus = 0
     def turn(self):
+        if self.score_bonus == 0 and self.score<60:
+            self.influence += 4
+            self.score_bonus += 1
         self.budget+=self.income
         if self.budget>self.max_budget:
             self.budget = self.max_budget

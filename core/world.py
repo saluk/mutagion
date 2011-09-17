@@ -127,10 +127,13 @@ class CityPanel(Agent):
                     self.objects.append(Agent(icon,pos=[px,py]))
                 self.objects.append(Text(pos=[px+20,py]).set_text(text))
             if self.city.isolated:
-                btn("Connect [$100]","connect","art/car.png")
+                btn("Connect [-100]","connect","art/car.png")
                 py+=20
             else:
-                btn("Isolate [$500]","isolate","art/car.png")
+                inf = 5
+                if self.city.advertising:
+                    inf = 3
+                btn("Isolate [$500/%s inf]"%inf,"isolate","art/car.png")
                 py+=20
             btn("Hire researcher [$50] (%s)"%len([x for x in self.city.people if x.job=="researcher"]),"researcher","art/researcher.png")
             py+=20
@@ -160,17 +163,28 @@ class CityPanel(Agent):
             o.draw(engine)
             o.pos = p
     def action(self,world,money=None,influence=None):
-        if money:
+        con = 1
+        if influence:
+            con = 1*con
+            if influence>world.player.influence:
+                con = 0*con
+        if money and con:
             if world.player.budget>=money:
                 world.player.budget-=money
-                return True
+                con = 1*con
             else:
-                world.engine.offset = [random.random()*0.2-0.1,random.random()*0.2-0.1]
+                con = 0*con
+        if not con:
+            world.engine.offset = [random.random()*0.2-0.1,random.random()*0.2-0.1]
+        return con
     def isolate(self,world):
-        if self.action(world,500,0):
+        inf = 5
+        if self.city.advertising:
+            inf = 3
+        if self.action(world,500,inf):
             self.city.isolated = True
     def connect(self,world):
-        if self.action(world,100,0):
+        if self.action(world,-100,0):
             self.city.isolated = False
     def doctor(self,world):
         if self.action(world,200,0):
@@ -179,8 +193,9 @@ class CityPanel(Agent):
         if self.action(world,50,0):
             self.city.add(Researcher())
     def influence(self,world):
-        world.player.influence += 1
-        self.city.advertising += 1
+        if self.action(world,1000,0):
+            world.player.influence += 1
+            self.city.advertising += 1
 
 class Messages(Agent):
     def init(self):

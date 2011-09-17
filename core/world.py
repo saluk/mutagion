@@ -135,18 +135,14 @@ class CityPanel(Agent):
             btn("Hire doctor [$200] (%s)"%len([x for x in self.city.people if x.job=="doctor"]),"doctor","art/doctor.png")
             py+=20
         if self.turnon:
-            if 0:#self.turnon<240:
-                d = 300
-                if self.pos[0]<d:
-                    self.pos[0]=640
-                if self.pos[0]>d:
-                    self.pos[0]-=20
-            else:
-                d = 0
-                if self.pos[0]>d:
-                    self.pos[0]=-200
-                if self.pos[0]<d:
-                    self.pos[0]+=20
+            d = 0
+            if self.pos[0]>d:
+                self.pos[0]=-200
+            if self.pos[0]<d:
+                self.pos[0]+=20
+                if self.turnon<240:
+                    if self.world.map.pos[0]<200:
+                        self.world.map.pos[0]+=20
     def draw(self,engine):
         self.surface.fill([0,0,0])
         pygame.draw.rect(self.surface,[0,255,0],[[0,0],[200,400]],2)
@@ -234,13 +230,15 @@ class MapWorld(World):
         if seed:
             random.seed(seed)
         self.offset = [0,0]
-        self.add(Agent(art="art/americalowres.png",pos=[0,0]))
-        c = CityDrawer(pos=[0,0])
-        c.world = self
-        self.add(c)
+        self.mapart = Agent(art="art/americalowres.png",pos=[0,0])
+        self.add(self.mapart)
+        self.map = CityDrawer(pos=[0,0])
+        self.map.world = self
+        self.add(self.map)
         self.panel = CityPanel(pos=[-200,0])
         self.panel.surface = pygame.Surface([200,400])
         self.add(self.panel)
+        self.panel.world = self
         self.num_viruses = num_viruses
         self.load_cities()
         self.play_music()
@@ -322,6 +320,7 @@ class MapWorld(World):
                 self.panel.city = self.over
             else:
                 self.panel.pos[0] = -200
+                self.map.pos = [0,0]
                 self.panel.turnon = None
                 self.panel.city = None
     def update(self):
@@ -338,6 +337,7 @@ class MapWorld(World):
                 t.set_text(t.data[0])
                 self.messagepanel.objects.append(t)
                 self.next_message = self.message_time
+        self.mapart.pos = self.map.pos
     def turn(self):
         d = {"news":[],"world":self}
         [c.turn(d) for c in self.cities]

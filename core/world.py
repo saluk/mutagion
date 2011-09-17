@@ -150,9 +150,9 @@ class CityPanel(Agent):
                 self.pos[0]=-200
             if self.pos[0]<d:
                 self.pos[0]+=20
-                if self.turnon<240:
-                    if self.world.map.pos[0]<200:
-                        self.world.map.pos[0]+=20
+                #~ if self.turnon<240:
+                    #~ if self.world.map.pos[0]<200:
+                        #~ self.world.map.pos[0]+=20
     def draw(self,engine):
         self.surface.fill([0,0,0])
         pygame.draw.rect(self.surface,[0,255,0],[[0,0],[200,400]],2)
@@ -212,7 +212,7 @@ class Messages(Agent):
     def update(self,world):
         self.over = None
         for o in self.objects[:]:
-            o.pos[0]-=2
+            o.pos[0]-=5
             x,y = world.engine.get_mouse_pos()
             if x>=o.pos[0] and x<=o.rect().right and y>=o.pos[1] and y<=o.rect().bottom:
                 self.over = o
@@ -257,7 +257,7 @@ class PlayerPanel(Agent):
                 self.objects.append(Text(pos=[x+20,y]).set_text("%s: %s"%(v,self.player.viruses[v])))
                 y+=20
         if self.player:
-            self.dollar_text.set_text("%(budget)s / +%(income)s"%self.player.__dict__)
+            self.dollar_text.set_text("%(budget)s/%(max_budget)s +%(income)s"%self.player.__dict__)
             self.influence_text.set_text("Influence: %(influence)s"%self.player.__dict__)
             self.score_text.set_text("Score: %(score)s%%"%self.player.__dict__)
     def draw(self,engine):

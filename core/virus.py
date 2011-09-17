@@ -165,6 +165,40 @@ class Doctor(Population):
         self.lifestyle = 10
     def random_walk(self,location):
         pass
+    def turn(self,context):
+        self.dohealing()
+        super(Doctor,self).turn(context)
+    def dohealing(self):
+        if not self.location:
+            print "no location?"
+            return
+        people = self.location.people[:]
+        def score(p):
+            sc = 0
+            for i in p.illnesses:
+                if i.name in self.player.viruses:
+                    if self.player.viruses[i.name]>sc:
+                        sc = self.player.viruses[i.name]
+        people.sort(key=lambda p:score(p))
+        if not people:
+            return
+        p = people[-1]
+        if score(p)==0:
+            return
+        il = p.illnesses[:]
+        def score(i):
+            if i.name in self.player.viruses:
+                return self.player.viruses[i.name]*i.age
+            return 0
+        if not il:
+            return
+        il.sort(key=lambda i:score(i))
+        il = il[-1]
+        if score(il)==0:
+            return
+        il.age -= self.player.viruses[il.name]
+        if il.age==0:
+            p.remove_disease(il)
         
 class Researcher(Population):
     def defaults(self):
@@ -179,13 +213,11 @@ class Researcher(Population):
         super(Researcher,self).turn(context)
     def doresearch(self):
         if not self.location:
-            print "no location?"
             return
         names = set()
         for p in self.location.people:
             if p.job in ["researcher","doctor"]:
                 continue
-            print p.illnesses
             for il in p.illnesses:
                 names.add(il.name)
         def score(name):
@@ -199,14 +231,12 @@ class Researcher(Population):
         if not names:
             return
         names.sort(key=lambda x:score(x))
-        print "diseases:",names
         name = names[0]
         sc = self.player.viruses.get(name,0)
         sc += 1
         if sc>3:
             sc = 3
         self.player.viruses[name] = sc
-        print self.player.viruses
 
 names = []
 f = open("dat/people.txt")

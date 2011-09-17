@@ -189,10 +189,14 @@ class CityPanel(Agent):
             self.city.isolated = False
     def doctor(self,world):
         if self.action(world,200,0):
-            self.city.add(Doctor())
+            d = Doctor()
+            d.player = world.player
+            inhabit(self.city,d)
     def researcher(self,world):
         if self.action(world,50,0):
-            self.city.add(Researcher())
+            r = Researcher()
+            r.player = world.player
+            inhabit(self.city,r)
     def influence(self,world):
         if self.action(world,1000,0):
             world.player.influence += 1
@@ -233,7 +237,8 @@ class PlayerPanel(Agent):
         self.bg.set_alpha(150)
         self.player = None
     def update(self,world):
-        if self.player and not self.objects:
+        if self.player:
+            self.objects = []
             x=self.pos[0]+2
             y=self.pos[1]+2
             self.objects.append(Agent(art="art/dollar.png",pos=[x,y]))
@@ -246,6 +251,11 @@ class PlayerPanel(Agent):
             self.score_text = Text(pos=[x+20,y])
             self.objects.append(self.score_text)
             y+=20
+            self.objects.append(Text(pos=[x,y]).set_text("Virus study level:"))
+            y+=20
+            for v in self.player.viruses:
+                self.objects.append(Text(pos=[x+20,y]).set_text("%s: %s"%(v,self.player.viruses[v])))
+                y+=20
         if self.player:
             self.dollar_text.set_text("%(budget)s / +%(income)s"%self.player.__dict__)
             self.influence_text.set_text("Influence: %(influence)s"%self.player.__dict__)
@@ -277,7 +287,7 @@ class MapWorld(World):
         self.load_cities()
         self.play_music()
         self.over = None
-        self.turn_time = 1#60#60*10
+        self.turn_time = 60#60*10
         self.next_turn = self.turn_time
         self.messages = []
         self.message_time = 60*2
@@ -391,7 +401,6 @@ class MapWorld(World):
                     for il in p.illnesses:
                         if il.type=="deadly":
                             virusleft += 1
-        print pop,self.total_pop
         self.player.score = pop/float(self.total_pop)*100
         for n in d["news"]:
             if n["type"] == "deaths":

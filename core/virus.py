@@ -162,6 +162,7 @@ class Doctor(Population):
         Population.defaults(self)
         self.job = "doctor"
         self.name = "Doctor"
+        self.lifestyle = 10
     def random_walk(self,location):
         pass
         
@@ -170,8 +171,42 @@ class Researcher(Population):
         Population.defaults(self)
         self.job = "researcher"
         self.name = "Researcher"
+        self.lifestyle = 10
     def random_walk(self,location):
         pass
+    def turn(self,context):
+        self.doresearch()
+        super(Researcher,self).turn(context)
+    def doresearch(self):
+        if not self.location:
+            print "no location?"
+            return
+        names = set()
+        for p in self.location.people:
+            if p.job in ["researcher","doctor"]:
+                continue
+            print p.illnesses
+            for il in p.illnesses:
+                names.add(il.name)
+        def score(name):
+            sc = 0
+            if sc not in self.player.viruses:
+                sc = 10
+            else:
+                sc = 3-self.player.viruses[name]
+            return sc
+        names = list(names)
+        if not names:
+            return
+        names.sort(key=lambda x:score(x))
+        print "diseases:",names
+        name = names[0]
+        sc = self.player.viruses.get(name,0)
+        sc += 1
+        if sc>3:
+            sc = 3
+        self.player.viruses[name] = sc
+        print self.player.viruses
 
 names = []
 f = open("dat/people.txt")
@@ -304,7 +339,7 @@ class Disease(Model):
         return d
     def mutate(self):
         if random.randint(0,100)<self.mutate_chance:
-            self.name = random.randint(0,500000)
+            self.name = "H%s"%random.randint(0,500000)
             while self.name in self.names:
                 self.name = "H%s"%random.randint(0,500000)
             self.names.append(self.name)

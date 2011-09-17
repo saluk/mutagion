@@ -105,10 +105,14 @@ class CityPanel(Agent):
             self.objects.append(Text(pos=[px,py]).set_text(self.city.name))
             py+=15
             for p in self.city.people:
-                if p.symptoms():
+                if 1:#p.symptoms():
                     self.objects.append(
-                        Text(pos=[px,py]).set_text("%s - %s"%(
+                        Text(pos=[px,py]).set_text("%s - mobile%s dead?%s homesick %s, %s, %s"%(
                                 p.name,
+                                p.mobility,
+                                p.dead,
+                                p.homesick,
+                                p.travel_factor(),
                                 ",".join([x.name for x in p.symptoms()])
                             )))
                     py += 10
@@ -292,7 +296,7 @@ class MapWorld(World):
                 if pop<0:
                     p.size+=pop
                 p.size = int(p.size)
-                c.add(p)
+                inhabit(c,p)
             if pop:
                 random.choice(c.people).size+=int(pop)
         for i in range(self.num_viruses):

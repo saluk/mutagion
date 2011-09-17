@@ -78,8 +78,11 @@ class Population(Model):
         self.trust = 0  #How likely they are to trust the media
         self.job = None
         
+        self.location = None
         self.last_travel = 0
         self.travel_history = []  #first entry is their home
+        self.homesick = 0
+        self.max_travel_distance = 3
         self.illnesses = []
         self.immunities = set()
         self.dead = False
@@ -90,6 +93,7 @@ class Population(Model):
         tf = 10
         for s in self.symptoms():
             tf -= s.visibility*s.severity
+        return tf
     def symptoms(self):
         symptoms = set()
         if self.dead:
@@ -115,15 +119,30 @@ class Population(Model):
         tf = self.travel_factor()
         if tf<5:
             return
+        if self.homesick:
+            if self.travel_history:
+                self.moveto(self.travel_history[-1],False)
+                del self.travel_history[-1]
+            if not self.travel_history:
+                self.homesick = False
+                self.last_travel=0
+            return
         self.last_travel += 1
         if self.last_travel>=self.mobility:
             self.last_travel = 0
             options = location.get_travelmap()
             if not options:
+                print "cant travel"
                 return
             l = random.choice(options)
-            l[1].add(self)
-            location.remove(self)
+            self.moveto(l[1])
+            if len(self.travel_history)>=self.max_travel_distance:
+                self.homesick = True
+    def moveto(self,l,history=True):
+        if history:
+            self.travel_history.append(self.location)
+        self.location.remove(self)
+        inhabit(l,self)        
     def remove_disease(self,d):
         if d in self.illnesses:
             self.illnesses.remove(d)
@@ -295,6 +314,7 @@ class Disease(Model):
 
 def inhabit(location,population):
     location.people.append(population)
+    population.location = location
 def infect(disease,population):
     """After building a disease, inflict it on a population."""
     if len(population.illnesses)<2:
